@@ -13,14 +13,13 @@ public class Haushaltsrechner extends Application {
 	
 	public void start(Stage primaryStage) {
 		try {
-			
-//			Scene scene = new Scene();
-//			primaryStage.setTitle();
+			GUI gui = new GUI();
+			Scene scene = new Scene(gui.getRoot());
+			primaryStage.setTitle("Haushaltsrechner");
 			primaryStage.setMaxHeight(900);
 			primaryStage.setMaxWidth(800);
-//			primaryStage.setScene(scene);
+			primaryStage.setScene(scene);
 			primaryStage.show();
-			//...
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
