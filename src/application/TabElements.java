@@ -28,6 +28,7 @@ public class TabElements extends ConfigElements {
 	private ArrayList<GridPane> gridList = new ArrayList<GridPane>();
 	private MyButton delBtn = new MyButton("alle Daten für diesem Monat löschen");
 	private String bg = "-fx-background-color: ";
+	private EntryElemList entryElemList = new EntryElemList();
 	private int scrollLayoutX = 20;
 	private int scrollLayoutY = 50;
 	private int vboxLayoutX = 25;
@@ -47,12 +48,14 @@ public class TabElements extends ConfigElements {
 	private int labelPrefH[] = { 30, 30, 30, 30 };
 	private int labelMaxH[] = { 40, 40, 40, 40 };
 	private int totalMaxW[] = { 280, 280, 150, 200 };
-	private int totalMinW[] = { 10, 80, 30, 20 };
-	private int totalPrefW[] = { 250, 200, 140, 90 };
+	private int totalMinW[] = { 120, 120, 120, 20 };
+	private int totalPrefW[] = { 220, 200, 180, 90 };
 //	private int totalPrefH[] = { 30, 30, 30, 30 };
 	private String[] type = { "in", "exp" };
 	private int counterIn = 0;
 	private int counterExp = 0;
+	private int counterMax = 12;
+	final static int sumInitRow = 3;
 
 	TabElements(int id, String month) {
 		this.id = id;
@@ -78,6 +81,7 @@ public class TabElements extends ConfigElements {
 		configGridTypeA(gridList.get(0), mainLabels, type[0]);
 		configGridTypeA(gridList.get(1), mainLabels, type[1]);
 		configGridTypeB(gridList.get(2));
+
 	}
 
 	public Tab getTab() {
@@ -110,6 +114,7 @@ public class TabElements extends ConfigElements {
 	private void configGridTypeA(GridPane grid, String[] labels, String type) {
 
 		grid.setPrefWidth(660);
+//		grid.setGridLinesVisible( true );
 
 		Image image = new Image("File:tacho.png");
 		ImageView imgDelView = new ImageView(image);
@@ -138,29 +143,30 @@ public class TabElements extends ConfigElements {
 
 		}
 		for (int i = 0; i < gridRowNumber; i++) {
-			RowConstraints rowConstraints = new RowConstraints();
-			grid.getRowConstraints().add(rowConstraints);
-			setRowConstraints(rowConstraints, null, labelPrefH[i], null);
+//			RowConstraints rowConstraints = new RowConstraints();
+//			grid.getRowConstraints().add(rowConstraints);
+//			setRowConstraints(rowConstraints, null, labelPrefH[i], null);
 		}
 
 		if (type.equals("in")) {
-			setEntryItem(this.type[1], grid, "Betrag eingeben", "hinzufügen");
-			setSum(this.type[1], grid, "Summe Einnahmen: ");
+			setEntryItem(this.type[0], grid, "Betrag eingeben", "hinzufügen");
+			setSum(this.type[0], grid, "Summe Einnahmen: ");
 		}
 		if (type.equals("exp")) {
 			setEntryItem(this.type[1], grid, "Betrag eingeben", "hinzufügen");
-			setSum(this.type[0], grid, "Summe Ausgaben: ");
+			setSum(this.type[1], grid, "Summe Ausgaben: ");
 		}
 
 	}
 
 	private void configGridTypeB(GridPane grid) {
+//		grid.setGridLinesVisible( true );
 		for (int i = 0; i < totalPrefW.length; i++) {
 			ColumnConstraints colConstraints = new ColumnConstraints();
 			setColConstraints(colConstraints, totalMinW[i], totalPrefW[i], totalMaxW[i]);
 		}
 		grid.setStyle(bg + getMidGreen());
-		grid.setPrefSize(scrollPrefHeight, 40);
+		grid.setPrefSize(scrollPrefHeight, 46);
 		setTotal("total" + id, grid, "Gesamt: ", "berechne");
 	}
 
@@ -171,46 +177,70 @@ public class TabElements extends ConfigElements {
 				getfontSize(0));
 
 		addBtn.getBtn().setTextFill(Color.valueOf(getCream()));
-		addBtn.getBtn().setAlignment(Pos.CENTER);
-
-		Events events = new Events();
-		events.getEventAddEntry();
-		addBtn.getBtn().setOnAction(e -> events.getHandle(input.getTextField(), this.id, grid, getCounter(type), type));
+		GridPane.setMargin(addBtn.getBtn(), new Insets(5, 10, 5, 10));
 		grid.add(input.getTextField(), 1, 1);
 		grid.add(addBtn.getBtn(), 2, 1);
+//		EventaddEntryElements event = new EventaddEntryElements();
+		
+		try {
+			addBtn.getBtn()
+					.setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList, input.getTextField(), this.id, grid, getCounter(type), this.counterMax, type));
 
-		GridPane.setMargin(input.getTextField(), new Insets(3, 2, 3, 2));
+			if (type.equals("in"))
+				this.counterIn++;
+			if (type.equals("exp"))
+				this.counterExp++;
+			
+			GridPane.setMargin(input.getTextField(), new Insets(6, 5, 6, 2));
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Neuer Eintrag konnte nicht hinzugefügt werden");
+		}
+		try {
+			input.getTextField().setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList, input.getTextField(), this.id, grid, getCounter(type), this.counterMax, type));
+
+			if (type.equals("in"))
+				this.counterIn++;
+			if (type.equals("exp"))
+				this.counterExp++;
+		} catch (Exception e) {
+			System.out.println("Neuer Eintrag konnte nicht hinzugefügt werden");
+		}
 	}
 
 	private void setSum(String type, GridPane grid, String text) {
-		String elementId = type + this.id;
-		MyLabel label = new MyLabel(text, elementId, 180, 30, bg + getlightGreen(), getfontStyle(1), getfontSize(2));
-		MyTextField tf = new MyTextField();
+		String elementId = type +"sum" + this.id;
+		MyLabel label = new MyLabel(text, "", 180, 30, bg + getlightGreen(), getfontStyle(1), getfontSize(2));
+		MyTextField tf = new MyTextField(elementId, "", 100, 30);
 
+		label.getLabel().setPadding(new Insets(1, 0,1,5));
 		tf.getTextField().setAlignment(Pos.CENTER_RIGHT);
-		grid.add(label.getLabel(), 1, 4);
-		grid.add(tf.getTextField(), 2, 4);
+		tf.getTextField().setStyle(getBg()+getCream() + ";" + getBorder()+getDarkBlue());
+		grid.add(label.getLabel(), 1, sumInitRow);
+		grid.add(tf.getTextField(), 2, sumInitRow);
 
-		GridPane.setMargin(tf.getTextField(), new Insets(3, 0, 3, 0));
+		GridPane.setMargin(tf.getTextField(), new Insets(10, 0, 10, 0));
 	}
 
 	private void setTotal(String id, GridPane grid, String text, String btnText) {
+		
+		ItemTotal itemTotal = new ItemTotal(text, btnText, id);
+//		MyLabel label = new MyLabel(text, "", 320, 35, "", getfontStyle(1), getfontSize(2));
+//		MyButton btn = new MyButton(btnText, id, 100, 35, bg + getDarkBlue() + ";-fx-border-radius: 5", getfontStyle(1),
+//				getfontSize(1));
+//		MyTextField tf = new MyTextField("", "", 120, 35);
 
-		MyLabel label = new MyLabel(text, "", 200, 30, "", getfontStyle(1), getfontSize(2));
-		MyButton btn = new MyButton(btnText, id, 100, 28, bg + getDarkBlue() + ";-fx-border-radius: 5", getfontStyle(1),
-				getfontSize(1));
-		MyTextField tf = new MyTextField("", "", 130, 30);
+		itemTotal.label.getLabel().setAlignment(Pos.CENTER_RIGHT);
+		itemTotal.label.getLabel().setPadding(new Insets(5, 20, 5, 0));
+		itemTotal.btn.getBtn().setTextFill(Color.valueOf(getCream()));
 
-		label.getLabel().setAlignment(Pos.CENTER);
-		btn.getBtn().setTextFill(Color.valueOf(getCream()));
+		itemTotal.tf.getTextField().setAlignment(Pos.CENTER);
 
-		tf.getTextField().setAlignment(Pos.BASELINE_RIGHT);
+		grid.add(itemTotal.label.getLabel(), 0, 0);
+		grid.add(itemTotal.btn.getBtn(), 1, 0);
+		grid.add(itemTotal.tf.getTextField(), 2, 0);
 
-		grid.add(label.getLabel(), 0, 0);
-		grid.add(btn.getBtn(), 1, 0);
-		grid.add(tf.getTextField(), 2, 0);
-
-		GridPane.setMargin(btn.getBtn(), new Insets(3, 2, 3, 2));
+		GridPane.setMargin(itemTotal.btn.getBtn(), new Insets(3, 10, 3, 10));
 	}
 
 	public int getCounter(String type) {

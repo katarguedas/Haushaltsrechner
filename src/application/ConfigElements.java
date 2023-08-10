@@ -23,6 +23,13 @@ public abstract class ConfigElements {
 	private String fontStyle[] = { "System", "System bold" };
 	private int fontSize[] = { 14, 15, 16, 18, 20 };
 
+	String getBg() {
+		return bg;
+	}
+	String getBorder() {
+		return border;
+	}
+	
 	String getDarkBlue() {
 		return darkBlue;
 	}

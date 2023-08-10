@@ -13,7 +13,7 @@ public class MonthlyBudget {
 		return -1 * this.expense.getTotal() + this.income.getTotal();
 	}
 
-	public void setRevenue(int id, Entry entry) {
+	public void setIncome(int id, Entry entry) {
 		this.income.addItem(id, entry);
 		this.total = calcTotal();
 	}
@@ -32,7 +32,7 @@ public class MonthlyBudget {
 		return expense;
 	}
 
-	public EntryList getRevenue() {
+	public EntryList getIncome() {
 		return income;
 	}
 
