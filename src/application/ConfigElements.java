@@ -1,13 +1,10 @@
 package application;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
@@ -26,10 +23,11 @@ public abstract class ConfigElements {
 	String getBg() {
 		return bg;
 	}
+
 	String getBorder() {
 		return border;
 	}
-	
+
 	String getDarkBlue() {
 		return darkBlue;
 	}
@@ -76,7 +74,6 @@ public abstract class ConfigElements {
 
 	public void setDimensions(Label label, Object wmin, Object hmin, Object wpref, Object hpref, Object wmax,
 			Object hmax) {
-		int li = 0;
 		if (wmin != null)
 			label.setMinWidth((int) wmin);
 		if (hmin != null)
@@ -157,8 +154,6 @@ public abstract class ConfigElements {
 			cons.setMaxHeight((int) hmax);
 	}
 
-
-
 	public void setLayout(Button btn, int x, int y) {
 		btn.setLayoutX(x);
 		btn.setLayoutY(y);
@@ -185,7 +180,6 @@ public abstract class ConfigElements {
 
 	public void setStyle(Button btn, String bgColor, String color) {
 		String text = "";
-
 		btn.setStyle("");
 	}
 

@@ -9,7 +9,7 @@ public class Entry {
 	Entry() {
 	}
 
-	Entry(String name, double amount, boolean fixed) {
+	public Entry(String name, double amount, boolean fixed) {
 		this.name = name;
 		this.amount = amount;
 		this.fixed = fixed;
@@ -32,13 +32,13 @@ public class Entry {
 	}
 
 	public boolean isFixed() {
-		return fixed;
+		return this.fixed;
 	}
 
 	public void setFixed(boolean isFixed) {
+		System.out.println("parameter ist: "+isFixed);
 		this.fixed = isFixed;
 	}
-
 
 	@Override
 	public String toString() {

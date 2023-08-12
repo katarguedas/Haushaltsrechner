@@ -1,10 +1,8 @@
 package application;
 
-import java.util.ArrayList;
-
+import data.Entry;
+import data.MonthlyBudget;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -16,32 +14,32 @@ public class EventaddEntryElements {
 		return this.event;
 	}
 
-	public void getHandle(EntryElemList elemList, TextField input, int id, GridPane grid, int counter, int counterMax,
-			String type) {
-		addEntryElements(elemList, input, id, grid, counter, counterMax, type);
+	public void getHandle(EntryElemList elemList, TextField input, int id, GridPane grid, Counter counter, int maxRowNumber,
+			String type, MonthlyBudget monthlyBudget, TextField sumTF) {
+		addEntryElements(elemList, input, id, grid, counter, maxRowNumber, type, monthlyBudget, sumTF);
 	}
 
-	public void addEntryElements(EntryElemList elemList, TextField input, int id, GridPane grid, int counter,
-			int counterMax, String type) {
-
+	public void addEntryElements(EntryElemList elemList, TextField input, int id, GridPane grid, Counter counter,
+			int maxRowNumber, String type, MonthlyBudget monthlyBudget, TextField sumTF) {
 		if (input.getText().length() < 1) {
 			System.out.println("Kein Text eingegeben");
 			MyAlerts.infoAlert(2);
 		} else {
 
-			counter += 1;
-			if (counter < counterMax) {
-				EntryElements entryEl = new EntryElements(counter, input.getText());
-				elemList.addEntryToList(entryEl, counter, input.getText(), type);
-				entryEl.addEntryToRow(grid, elemList.getEntryElemList(type), counter, input.getText(), type, id);
+			counter.increment();
 
+			if (elemList.getEntryElemList(type).size() < maxRowNumber) {
+				
+				// GUI-Elements of the new Entry
+				EntryElements entryEl = new EntryElements(counter.getCounter(), input.getText());
+				elemList.addEntryElemToList(entryEl, counter.getCounter(), input.getText(), type);
+				entryEl.addEntryToRow(grid, elemList.getEntryElemList(type), counter.getCounter(), input.getText(), type, id, monthlyBudget, sumTF );
+				
 				input.clear();
 			} else {
 				MyAlerts.infoAlert(3);
 			}
 		}
-		int hashcode = elemList.getEntryElemList(type).get(0).amountTF.getTextField().hashCode();
-		System.out.println("tf hashcode: " + hashcode);
 	}
 
 }

@@ -5,15 +5,15 @@ import java.util.HashMap;
 public class EntryList {
 
 	private HashMap<Integer, Entry> entryList = new HashMap<>();
-	private double total;
+	private double sum;
 
-	public void addItem(int id, Entry item) {
-		this.entryList.put(id, item);
-		this.total = sum();
-	}
+//	public void addItem(int id, Entry item) {
+//		this.entryList.put(id, item);
+//		this.sum = sum();
+//	}
 
-	public void updateTotal() {
-		this.total = sum();
+	public void updateSum() {
+		this.sum = sum();
 	}
 
 	public double sum() {
@@ -29,21 +29,32 @@ public class EntryList {
 		}
 	}
 
-	public HashMap<Integer, Entry> getItemGroup() {
+	public HashMap<Integer, Entry> getEntryList() {
 		return entryList;
 	}
 
-	public void setTotal(double total) {
-		this.total = total;
+	public void setSum(double sum) {
+		this.sum = sum;
 	}
 
-	public double getTotal() {
-		return total;
+	public double getSum() {
+		return sum;
+	}
+
+	public Entry getEntry(int id) {
+		for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
+
+			if (entry.getKey() == id) {
+				System.out.println("gefunden" + id + ", " + entry.getKey() + "name: "+ entry.getValue().getName());
+				return entry.getValue();
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public String toString() {
-		return "ItemGroup [itemGroup=" + entryList + ", total=" + total + "]";
+		return "entryList [entryList=" + entryList + ", sum=" + sum + "]";
 	}
-	
+
 }

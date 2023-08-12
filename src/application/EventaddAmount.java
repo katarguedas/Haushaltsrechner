@@ -2,50 +2,56 @@ package application;
 
 import java.util.ArrayList;
 
+import data.Entry;
+import data.MonthlyBudget;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class EventaddAmount {
-	
-	ActionEvent event = new ActionEvent();
 
+	ActionEvent event = new ActionEvent();
 
 	public ActionEvent getEvent() {
 		return this.event;
 	}
 
-	public void getHandle(ActionEvent event, ArrayList<EntryElements> elemList, GridPane grid, int id, String type) {
-		onEnterAddAmount(event, grid, id, type, elemList);
+	public void getHandle(ActionEvent event, ArrayList<EntryElements> elemList, GridPane grid, int id, String type, int counter,
+			MonthlyBudget monthlyBudget, TextField sumTF) {
+		onEnterAddAmount(event, grid, id, type, elemList, counter, monthlyBudget, sumTF);
 	}
 
-	void onEnterAddAmount(ActionEvent event, GridPane grid, int id, String type, ArrayList<EntryElements> elemList) {
+	void onEnterAddAmount(ActionEvent event, GridPane grid, int id, String type, ArrayList<EntryElements> elemList, int counter,
+			MonthlyBudget monthlyBudget, TextField sumTF) {
 		//
 		int hashcode = event.getSource().hashCode();
 
-		if (type.equals("in")) {
-			addAmount(event, elemList);
-		}
-	}
-
-	void addAmount(ActionEvent event, ArrayList<EntryElements> elemList) {
-		int hashcode = event.getSource().hashCode();
 		int index = Helper.findIndex(elemList, hashcode, "amountTF");
 
 		if (index != 999) {
-//			System.out.println(elemList.get(index).amountTF.getTextField().getText());
 
 			String inputText = elemList.get(index).amountTF.getTextField().getText();
 
 			if (!inputText.isEmpty()) {
 				try {
 					double value = Double.parseDouble(inputText);
-					int id = elemList.get(index).id;
 
-//						itemgroup.getItemGroup().get(id).setAmount(value);
-//						itemgroup.updateTotal();
-//						groupTotal.setText(Double.toString(itemgroup.getTotal()));
-//						input.getInputElement(index).amountTF.setAlignment(Pos.CENTER_RIGHT);
+					if (type.equals("in")) {
+						monthlyBudget.getIncome().getEntry(counter).setAmount(value);
+						double newSum = monthlyBudget.getIncome().getSum() + value;
+						monthlyBudget.getIncome().setSum(newSum);
+						sumTF.setText(Double.toString(monthlyBudget.getIncome().getSum()));
+					}
+					if (type.equals("exp")) {
+						monthlyBudget.getExpense().getEntry(counter).setAmount(value);
+						double newSum = monthlyBudget.getExpense().getSum() + value;
+						monthlyBudget.getExpense().setSum(newSum);
+						sumTF.setText(Double.toString(monthlyBudget.getExpense().getSum()));
+					}
+					monthlyBudget.calcTotal();
+
 				} catch (NumberFormatException e) {
 					System.out.println("Es uwrde keine Zahl eingegeben.");
 					MyAlerts.errorAlert(2);
@@ -54,7 +60,5 @@ public class EventaddAmount {
 
 		}
 	}
-
-	
 
 }

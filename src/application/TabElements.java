@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
+import data.MonthlyBudget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -11,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -29,6 +29,7 @@ public class TabElements extends ConfigElements {
 	private MyButton delBtn = new MyButton("alle Daten für diesem Monat löschen");
 	private String bg = "-fx-background-color: ";
 	private EntryElemList entryElemList = new EntryElemList();
+	private MonthlyBudget monthlyBudget;
 	private int scrollLayoutX = 20;
 	private int scrollLayoutY = 50;
 	private int vboxLayoutX = 25;
@@ -41,7 +42,6 @@ public class TabElements extends ConfigElements {
 	private int delBtnLayoutX = 30;
 	private int delBtnLayoutY = 15;
 	private String[] gridLabels = { "", "Bezeichnung", "Betrag", "Fixkosten" };
-	private int gridRowNumber = 4;
 	private int labelMaxW[] = { 280, 480, 160, 200 };
 	private int labelMinW[] = { 40, 300, 80, 60 };
 	private int labelPrefW[] = { 50, 390, 120, 90 };
@@ -50,14 +50,13 @@ public class TabElements extends ConfigElements {
 	private int totalMaxW[] = { 280, 280, 150, 200 };
 	private int totalMinW[] = { 120, 120, 120, 20 };
 	private int totalPrefW[] = { 220, 200, 180, 90 };
-//	private int totalPrefH[] = { 30, 30, 30, 30 };
 	private String[] type = { "in", "exp" };
-	private int counterIn = 0;
-	private int counterExp = 0;
-	private int counterMax = 12;
+	private Counter counterIn = new Counter();
+	private Counter counterExp = new Counter();
+	private int maxRowNumber = 12;
 	final static int sumInitRow = 3;
 
-	TabElements(int id, String month) {
+	TabElements(int id, String month, MonthlyBudget monthlyBudget) {
 		this.id = id;
 		this.tab.setText(month);
 		this.tab.setClosable(false);
@@ -74,6 +73,8 @@ public class TabElements extends ConfigElements {
 			this.gridVbox.getChildren().add(labelList.get(i).getLabel());
 			this.gridVbox.getChildren().add(gridList.get(i));
 		}
+
+		this.monthlyBudget = monthlyBudget;
 
 		configScroll();
 		configLabel();
@@ -142,22 +143,24 @@ public class TabElements extends ConfigElements {
 			label.getLabel().setAlignment(Pos.CENTER);
 
 		}
-		for (int i = 0; i < gridRowNumber; i++) {
-//			RowConstraints rowConstraints = new RowConstraints();
-//			grid.getRowConstraints().add(rowConstraints);
-//			setRowConstraints(rowConstraints, null, labelPrefH[i], null);
-		}
 
 		if (type.equals("in")) {
-			setEntryItem(this.type[0], grid, "Betrag eingeben", "hinzufügen");
-			setSum(this.type[0], grid, "Summe Einnahmen: ");
+			SumItem sumItem = new SumItem(this.type[0] + "sum" + id, "Summe Einnahmen: ");
+			sumItem.configSum(sumItem, grid, sumInitRow);
+			
+			EntryItem entryItem = new EntryItem(this.type[0], "Bezeichnung eingeben", "hinzufügen", this.id, grid);
+			entryItem.addEvents(entryElemList, this.id, grid, this.type[0], getCounter(this.type[0]), this.maxRowNumber, monthlyBudget, sumItem.getTf().getTextField());
 		}
+		
 		if (type.equals("exp")) {
-			setEntryItem(this.type[1], grid, "Betrag eingeben", "hinzufügen");
-			setSum(this.type[1], grid, "Summe Ausgaben: ");
+			SumItem sumItem = new SumItem(this.type[1] + "sum" + id, "Summe Ausgaben: ");
+			sumItem.configSum(sumItem, grid, sumInitRow);
+			
+			EntryItem entryItem = new EntryItem(this.type[1], "Bezeichnung eingeben", "hinzufügen", this.id, grid);
+			entryItem.addEvents(entryElemList, this.id, grid, this.type[1], getCounter(this.type[1]), this.maxRowNumber, monthlyBudget, sumItem.getTf().getTextField());		
 		}
-
 	}
+	
 
 	private void configGridTypeB(GridPane grid) {
 //		grid.setGridLinesVisible( true );
@@ -165,91 +168,22 @@ public class TabElements extends ConfigElements {
 			ColumnConstraints colConstraints = new ColumnConstraints();
 			setColConstraints(colConstraints, totalMinW[i], totalPrefW[i], totalMaxW[i]);
 		}
-		grid.setStyle(bg + getMidGreen());
-		grid.setPrefSize(scrollPrefHeight, 46);
-		setTotal("total" + id, grid, "Gesamt: ", "berechne");
-	}
-
-	private void setEntryItem(String type, GridPane grid, String text, String btnName) {
-		String elementId = type + this.id;
-		MyTextField input = new MyTextField(elementId, text, 120, 28);
-		MyButton addBtn = new MyButton(btnName, "addBtn" + id, 100, 26, bg + getDarkBlue(), getfontStyle(1),
-				getfontSize(0));
-
-		addBtn.getBtn().setTextFill(Color.valueOf(getCream()));
-		GridPane.setMargin(addBtn.getBtn(), new Insets(5, 10, 5, 10));
-		grid.add(input.getTextField(), 1, 1);
-		grid.add(addBtn.getBtn(), 2, 1);
-//		EventaddEntryElements event = new EventaddEntryElements();
 		
-		try {
-			addBtn.getBtn()
-					.setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList, input.getTextField(), this.id, grid, getCounter(type), this.counterMax, type));
-
-			if (type.equals("in"))
-				this.counterIn++;
-			if (type.equals("exp"))
-				this.counterExp++;
-			
-			GridPane.setMargin(input.getTextField(), new Insets(6, 5, 6, 2));
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Neuer Eintrag konnte nicht hinzugefügt werden");
-		}
-		try {
-			input.getTextField().setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList, input.getTextField(), this.id, grid, getCounter(type), this.counterMax, type));
-
-			if (type.equals("in"))
-				this.counterIn++;
-			if (type.equals("exp"))
-				this.counterExp++;
-		} catch (Exception e) {
-			System.out.println("Neuer Eintrag konnte nicht hinzugefügt werden");
-		}
+		ItemTotal itemTotal = new ItemTotal("Gesamt: ", "berechne", "total"+id);
+		itemTotal.configTotal(grid, scrollPrefHeight);
+		itemTotal.addEvent(monthlyBudget, itemTotal.tf.getTextField());
 	}
 
-	private void setSum(String type, GridPane grid, String text) {
-		String elementId = type +"sum" + this.id;
-		MyLabel label = new MyLabel(text, "", 180, 30, bg + getlightGreen(), getfontStyle(1), getfontSize(2));
-		MyTextField tf = new MyTextField(elementId, "", 100, 30);
 
-		label.getLabel().setPadding(new Insets(1, 0,1,5));
-		tf.getTextField().setAlignment(Pos.CENTER_RIGHT);
-		tf.getTextField().setStyle(getBg()+getCream() + ";" + getBorder()+getDarkBlue());
-		grid.add(label.getLabel(), 1, sumInitRow);
-		grid.add(tf.getTextField(), 2, sumInitRow);
+	public Counter getCounter(String type) {
 
-		GridPane.setMargin(tf.getTextField(), new Insets(10, 0, 10, 0));
-	}
-
-	private void setTotal(String id, GridPane grid, String text, String btnText) {
-		
-		ItemTotal itemTotal = new ItemTotal(text, btnText, id);
-//		MyLabel label = new MyLabel(text, "", 320, 35, "", getfontStyle(1), getfontSize(2));
-//		MyButton btn = new MyButton(btnText, id, 100, 35, bg + getDarkBlue() + ";-fx-border-radius: 5", getfontStyle(1),
-//				getfontSize(1));
-//		MyTextField tf = new MyTextField("", "", 120, 35);
-
-		itemTotal.label.getLabel().setAlignment(Pos.CENTER_RIGHT);
-		itemTotal.label.getLabel().setPadding(new Insets(5, 20, 5, 0));
-		itemTotal.btn.getBtn().setTextFill(Color.valueOf(getCream()));
-
-		itemTotal.tf.getTextField().setAlignment(Pos.CENTER);
-
-		grid.add(itemTotal.label.getLabel(), 0, 0);
-		grid.add(itemTotal.btn.getBtn(), 1, 0);
-		grid.add(itemTotal.tf.getTextField(), 2, 0);
-
-		GridPane.setMargin(itemTotal.btn.getBtn(), new Insets(3, 10, 3, 10));
-	}
-
-	public int getCounter(String type) {
-		int counter = 0;
-		if (type.equals("in"))
+		if (type.equals("in")) {			
 			return this.counterIn;
-		else if (type.equals("exp"))
+		}
+		else if (type.equals("exp")) {
 			return this.counterExp;
+		}
 		else
-			return counter;
+			return null;
 	}
 }

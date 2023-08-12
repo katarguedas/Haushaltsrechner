@@ -69,7 +69,6 @@ public class Helper {
 			for (int i = 0; i < elemList.size(); i++) {
 				switch (property) {
 				case "amountTF":
-					System.out.println(elemList.get(i).amountTF.getTextField().hashCode());
 					if (elemList.get(i).amountTF.getTextField().hashCode() == hashcode) {
 						index = i;
 						break;

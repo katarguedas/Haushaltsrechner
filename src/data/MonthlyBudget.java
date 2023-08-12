@@ -8,20 +8,27 @@ public class MonthlyBudget {
 	private double total;
 
 	public double calcTotal() {
-		System.out.println("gesamte Einnahmen: " + this.income.getTotal());
-		System.out.println("gesamte Ausgaben: " + this.expense.getTotal());
-		return -1 * this.expense.getTotal() + this.income.getTotal();
+		return -1 * this.expense.getSum() + this.income.getSum();
 	}
 
-	public void setIncome(int id, Entry entry) {
-		this.income.addItem(id, entry);
+	public void addIncome(int id, Entry entry) {
+		this.income.getEntryList().put(id, entry);
+		this.total = calcTotal();
+	}
+	
+	public void removeIncome(int id) {
+		this.income.getEntryList().remove(id);
 		this.total = calcTotal();
 	}
 
-	public void setExpense(int id, Entry entry) {
-		this.expense.addItem(id, entry);
+	public void addExpense(int id, Entry entry) {
+		this.expense.getEntryList().put(id, entry);
 		this.total = calcTotal();
-
+	}
+	
+	public void removeExpense(int id) {
+		this.expense.getEntryList().remove(id);
+		this.total = calcTotal();
 	}
 
 	public void setTotal(double total) {
@@ -29,11 +36,11 @@ public class MonthlyBudget {
 	}
 
 	public EntryList getExpense() {
-		return expense;
+		return this.expense;
 	}
 
 	public EntryList getIncome() {
-		return income;
+		return this.income;
 	}
 
 	public double getTotal() {
@@ -41,7 +48,7 @@ public class MonthlyBudget {
 	}
 
 	public String toString() {
-		return "MonthBudget [revenue=" + income + ", expense=" + expense + ", total=" + total + "]";
+		return "MonthBudget [income=" + getIncome() + ", expense=" + getExpense() + ", total=" + getTotal() + "]";
 	}
 
 }

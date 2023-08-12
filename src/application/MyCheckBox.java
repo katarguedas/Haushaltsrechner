@@ -15,9 +15,19 @@ public class MyCheckBox {
 	MyCheckBox(String name, String id) {
 		this.checkbox.setText(name);
 		this.checkbox.setId(id);
+		this.checkbox.setSelected(false);
 	};
 	
 	public CheckBox getCheckbox() {
 		return this.checkbox;
+	}
+	
+	public boolean isSelected() {
+		return this.checkbox.isSelected();
+	}
+
+	public void changeState() {
+		boolean state = !this.checkbox.isSelected();
+		this.checkbox.setSelected(!state);
 	}
 }
