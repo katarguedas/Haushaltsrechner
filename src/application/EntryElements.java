@@ -10,6 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import singleElements.MyButton;
+import singleElements.MyCheckBox;
+import singleElements.MyLabel;
+import singleElements.MyTextField;
 
 public class EntryElements {
 

@@ -6,6 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import singleElements.MyButton;
+import singleElements.MyLabel;
+import singleElements.MyTextField;
 
 public class ItemTotal extends ConfigElements {
 	
@@ -31,7 +34,7 @@ public class ItemTotal extends ConfigElements {
 	ItemTotal(String labelText, String btnText, String id) {
 		this.label = new MyLabel(labelText, "", labelPrefW, prefH, labelBg, labelfontStyle, labelFontSize);
 		this.btn = new MyButton(btnText, id, btnPrefW, prefH, btnBg, btnfontStyle, btnFontSize);
-		this.tf = new MyTextField("", "", tfPrefW, prefH);
+		this.tf = new MyTextField("tf"+id, "", tfPrefW, prefH);
 		
 		this.label.getLabel().setAlignment(Pos.CENTER_RIGHT);
 		this.label.getLabel().setPadding(new Insets(5, 20, 5, 0));

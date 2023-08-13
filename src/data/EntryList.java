@@ -7,11 +7,6 @@ public class EntryList {
 	private HashMap<Integer, Entry> entryList = new HashMap<>();
 	private double sum;
 
-//	public void addItem(int id, Entry item) {
-//		this.entryList.put(id, item);
-//		this.sum = sum();
-//	}
-
 	public void updateSum() {
 		this.sum = sum();
 	}
@@ -45,7 +40,6 @@ public class EntryList {
 		for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
 
 			if (entry.getKey() == id) {
-				System.out.println("gefunden" + id + ", " + entry.getKey() + "name: "+ entry.getValue().getName());
 				return entry.getValue();
 			}
 		}

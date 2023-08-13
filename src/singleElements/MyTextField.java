@@ -1,4 +1,4 @@
-package application;
+package singleElements;
 
 
 import javafx.scene.control.TextField;
@@ -12,22 +12,22 @@ public class MyTextField {
 
 	}
 
-	MyTextField(String id) {
+	public MyTextField(String id) {
 		this.tf.setId(id);
 	}
 	
-	MyTextField(String id, String prompText) {
+	public MyTextField(String id, String prompText) {
 		this.tf.setId(id);
 		this.tf.setPromptText(prompText);
 	}
 
-	MyTextField(String id, String prompText, int wPref, int hPref) {
+	public MyTextField(String id, String prompText, int wPref, int hPref) {
 		this.tf.setId(id);
 		this.tf.setPromptText(prompText);
 		this.tf.setPrefSize(wPref, hPref);
 	}
 
-	MyTextField(String id,  String prompText, int wPref, int hPref, String fontStyle, int fontSize) {
+	public MyTextField(String id,  String prompText, int wPref, int hPref, String fontStyle, int fontSize) {
 		this.tf.setId(id);
 		this.tf.setPromptText(prompText);
 		this.tf.setPrefSize(wPref, hPref);

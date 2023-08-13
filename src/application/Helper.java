@@ -12,6 +12,7 @@ public class Helper {
 	static public Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
 		ObservableList<Node> children = gridPane.getChildren();
 		for (Node node : children) {
+			
 			Integer columnIndex = GridPane.getColumnIndex(node);
 			Integer rowIndex = GridPane.getRowIndex(node);
 
@@ -32,6 +33,7 @@ public class Helper {
 		int[] pos = { 0, 0 };
 		int flag = 0;
 		for (Node node : children) {
+			
 			Integer columnIndex = GridPane.getColumnIndex(node);
 			Integer rowIndex = GridPane.getRowIndex(node);
 

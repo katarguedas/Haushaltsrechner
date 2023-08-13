@@ -6,9 +6,6 @@ public class EntryElemList {
 
 	ArrayList<EntryElements> InElemList = new ArrayList<EntryElements>();
 	ArrayList<EntryElements> ExpElemList = new ArrayList<EntryElements>();
-//	private int counterIn = 0;
-//	private int counterExp = 0;
-//	private int counterMax = 12;
 
 	EntryElemList() {
 

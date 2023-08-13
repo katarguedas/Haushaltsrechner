@@ -36,4 +36,5 @@ public class EventDeleteEntry {
 		if(type.equals("exp"))
 			monthlyBudget.getExpense().getEntryList().remove(index);		
 	}
+	
 }

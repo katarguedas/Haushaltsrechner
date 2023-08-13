@@ -1,4 +1,4 @@
-package application;
+package singleElements;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
@@ -11,29 +11,29 @@ public class MyLabel {
 
 	}
 
-	MyLabel(String text) {
+	public MyLabel(String text) {
 		this.label.setText(text);
 	}
 
-	MyLabel(String text, String id) {
+	public MyLabel(String text, String id) {
 		this.label.setText(text);
 		this.label.setId(id);
 	}
 
-	MyLabel(String text, String id, int wPref, int hPref) {
+	public MyLabel(String text, String id, int wPref, int hPref) {
 		this.label.setText(text);
 		this.label.setId(id);
 		this.label.setPrefSize(wPref, hPref);
 	}
 
-	MyLabel(String text, String id, int wPref, int hPref, String bg) {
+	public MyLabel(String text, String id, int wPref, int hPref, String bg) {
 		this.label.setText(text);
 		this.label.setId(id);
 		this.label.setPrefSize(wPref, hPref);
 		this.label.setStyle(bg);
 	}
 
-	MyLabel(String text, String id, int wPref, int hPref, String bg, String fontStyle, int fontSize) {
+	public MyLabel(String text, String id, int wPref, int hPref, String bg, String fontStyle, int fontSize) {
 		this.label.setText(text);
 		this.label.setId(id);
 		this.label.setPrefSize(wPref, hPref);

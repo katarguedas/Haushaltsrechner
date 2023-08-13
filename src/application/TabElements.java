@@ -14,6 +14,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import singleElements.MyButton;
+import singleElements.MyLabel;
 
 public class TabElements extends ConfigElements {
 
@@ -64,8 +66,7 @@ public class TabElements extends ConfigElements {
 		this.anchor.getChildren().add(this.scroll);
 		this.scroll.setContent(this.gridVbox);
 		this.anchor.getChildren().add(this.delBtn.getBtn());
-		this.delBtn.setBtnLayout(delBtnLayoutX, delBtnLayoutY);
-
+		
 		for (int i = 0; i < gridName.length; i++) {
 			this.labelList.add(new MyLabel(mainLabels[i], "", scrollPrefWidth, 20, bg + getDarkBlue(), getfontStyle(1),
 					getfontSize(2)));
@@ -79,6 +80,7 @@ public class TabElements extends ConfigElements {
 		configScroll();
 		configLabel();
 		configVbox();
+		configDelBtn();
 		configGridTypeA(gridList.get(0), mainLabels, type[0]);
 		configGridTypeA(gridList.get(1), mainLabels, type[1]);
 		configGridTypeB(gridList.get(2));
@@ -101,6 +103,11 @@ public class TabElements extends ConfigElements {
 		gridVbox.setPrefHeight(650);
 		gridVbox.setPrefWidth(scrollPrefHeight);
 		gridVbox.setStyle(bg + getlightGreen());
+	}
+	
+	private void configDelBtn() {
+		this.delBtn.setBtnLayout(delBtnLayoutX, delBtnLayoutY);
+		this.delBtn.getBtn().setOnAction(e-> new EventDelMData().getHandle(entryElemList, this.id,gridList, monthlyBudget));
 	}
 
 	private void configLabel() {

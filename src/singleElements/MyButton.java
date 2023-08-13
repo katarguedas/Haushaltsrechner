@@ -1,4 +1,4 @@
-package application;
+package singleElements;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
@@ -11,29 +11,29 @@ public class MyButton {
 
 	};
 
-	MyButton(String name) {
+	public MyButton(String name) {
 		this.btn.setText(name);
 	};
 
-	MyButton(String name, String id) {
+	public MyButton(String name, String id) {
 		this.btn.setText(name);
 		this.btn.setId(id);
 	};
 
-	MyButton(String name, String id, int wPref, int hPref) {
+	public MyButton(String name, String id, int wPref, int hPref) {
 		this.btn.setText(name);
 		this.btn.setId(id);
 		this.btn.setPrefSize(wPref, hPref);
 	};
 
-	MyButton(String name, String id, int wPref, int hPref, String bg) {
+	public MyButton(String name, String id, int wPref, int hPref, String bg) {
 		this.btn.setText(name);
 		this.btn.setId(id);
 		this.btn.setPrefSize(wPref, hPref);
 		this.btn.setStyle(bg);
 	}
 
-	MyButton(String name, String id, int wPref, int hPref, String bg, String fontStyle, int fontSize) {
+	public MyButton(String name, String id, int wPref, int hPref, String bg, String fontStyle, int fontSize) {
 		this.btn.setText(name);
 		this.btn.setId(id);
 		this.btn.setPrefSize(wPref, hPref);

@@ -36,7 +36,6 @@ public class Entry {
 	}
 
 	public void setFixed(boolean isFixed) {
-		System.out.println("parameter ist: "+isFixed);
 		this.fixed = isFixed;
 	}
 

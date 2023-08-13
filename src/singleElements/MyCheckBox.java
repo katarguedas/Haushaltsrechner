@@ -1,4 +1,4 @@
-package application;
+package singleElements;
 
 import javafx.scene.control.CheckBox;
 
@@ -9,10 +9,10 @@ public class MyCheckBox {
 	MyCheckBox() {
 		
 	};
-	MyCheckBox(String name) {
+	public MyCheckBox(String name) {
 		this.checkbox.setText(name);
 	};
-	MyCheckBox(String name, String id) {
+	public MyCheckBox(String name, String id) {
 		this.checkbox.setText(name);
 		this.checkbox.setId(id);
 		this.checkbox.setSelected(false);

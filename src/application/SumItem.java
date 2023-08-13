@@ -1,5 +1,7 @@
 package application;
 
+import singleElements.MyLabel;
+import singleElements.MyTextField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;

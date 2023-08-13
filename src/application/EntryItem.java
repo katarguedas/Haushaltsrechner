@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import singleElements.MyButton;
+import singleElements.MyTextField;
 
 public class EntryItem extends ConfigElements {
 
