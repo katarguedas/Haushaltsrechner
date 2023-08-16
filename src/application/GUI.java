@@ -19,6 +19,10 @@ public class GUI {
 	GUI() {
 		this.root.getChildren().add(this.tabpane);
 		this.root.getChildren().add(fileHandling.getBox());
+		
+		this.fileHandling.getBtn("delete").setOnAction(e->new EventDeleteAllData().getHandle(tablist));
+		this.fileHandling.getBtn("load").setOnAction(e->new EventLoadData().getHandle(annualBudget, tablist));
+		this.fileHandling.getBtn("save").setOnAction(e->new EventSaveAllData().getHandle(annualBudget));
 
 		for (MonthOfYear month : MonthOfYear.values()) {
 			int id = month.getValue();
