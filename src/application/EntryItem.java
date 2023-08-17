@@ -32,7 +32,7 @@ public class EntryItem extends ConfigElements {
 
 		try {
 			this.addBtn.getBtn().setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList,
-					this.input.getTextField(), id, grid, counter, counterMax, type, monthlyBudget, sumTF));
+					this.input.getTextField(), id, grid, counter, counterMax, type, monthlyBudget, sumTF, false));
 
 //			counter++;
 
@@ -42,7 +42,7 @@ public class EntryItem extends ConfigElements {
 		}
 		try {
 			input.getTextField().setOnAction(e -> new EventaddEntryElements().getHandle(entryElemList,
-					this.input.getTextField(), id, grid, counter, counterMax, type, monthlyBudget, sumTF));
+					this.input.getTextField(), id, grid, counter, counterMax, type, monthlyBudget, sumTF, false));
 
 //				counter++;
 

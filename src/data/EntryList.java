@@ -1,10 +1,11 @@
 package data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EntryList {
 
-	private HashMap<Integer, Entry> entryList = new HashMap<>();
+	private ArrayList<Entry> entryList = new ArrayList<Entry>();
 	private double sum;
 
 	public void updateSum() {
@@ -14,8 +15,9 @@ public class EntryList {
 	public double sum() {
 		double sum = 0.0;
 		if (!this.entryList.isEmpty()) {
-			for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
-				double value = entry.getValue().getAmount();
+			for(int i=0; i<this.entryList.size();i++) {
+//			for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
+				double value = entryList.get(i).getAmount();
 				sum += value;
 			}
 			return sum;
@@ -24,8 +26,8 @@ public class EntryList {
 		}
 	}
 
-	public HashMap<Integer, Entry> getEntryList() {
-		return entryList;
+	public ArrayList<Entry> getEntryList() {
+		return this.entryList;
 	}
 
 	public void setSum(double sum) {
@@ -36,14 +38,14 @@ public class EntryList {
 		return sum;
 	}
 
-	public Entry getEntry(int id) {
-		for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
-
-			if (entry.getKey() == id) {
-				return entry.getValue();
-			}
-		}
-		return null;
+	public Entry getEntry(int index) {
+		
+//		for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
+//			if (entry.getKey() == id) {
+//				return entry.getValue();
+//			}
+//		}
+		return this.entryList.get(index);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class MonthlyBudget {
 	}
 
 	public void addIncome(int id, Entry entry) {
-		this.income.getEntryList().put(id, entry);
+		this.income.getEntryList().add(entry);
 		this.total = calcTotal();
 	}
 	
@@ -22,7 +22,7 @@ public class MonthlyBudget {
 	}
 
 	public void addExpense(int id, Entry entry) {
-		this.expense.getEntryList().put(id, entry);
+		this.expense.getEntryList().add(entry);
 		this.total = calcTotal();
 	}
 	
@@ -48,7 +48,7 @@ public class MonthlyBudget {
 	}
 
 	public String toString() {
-		return "MonthBudget [income=" + getIncome() + ", expense=" + getExpense() + ", total=" + getTotal() + "]";
+		return "MonthlyBudget [income=" + getIncome() + ", expense=" + getExpense() + ", total=" + getTotal() + "]";
 	}
 
 }

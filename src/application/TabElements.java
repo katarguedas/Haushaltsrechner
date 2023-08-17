@@ -124,8 +124,8 @@ public class TabElements extends ConfigElements {
 
 	private void configDelBtn() {
 		this.delBtn.setBtnLayout(delBtnLayoutX, delBtnLayoutY);
-		this.delBtn.getBtn()
-				.setOnAction(e -> new EventDelMData().getHandle(entryElemList, this.id, gridList, monthlyBudget));
+		this.delBtn.getBtn().setOnAction(e -> new EventDelMData().getHandle(this.entryElemList, this.id, this.gridList,
+				this.counterIn, this.counterExp, this.monthlyBudget));
 	}
 
 	private void configLabel() {
@@ -204,5 +204,5 @@ public class TabElements extends ConfigElements {
 		else
 			return null;
 	}
-	
+
 }

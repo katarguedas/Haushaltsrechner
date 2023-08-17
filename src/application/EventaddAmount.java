@@ -39,13 +39,13 @@ public class EventaddAmount {
 					double value = Double.parseDouble(inputText);
 
 					if (type.equals("in")) {
-						monthlyBudget.getIncome().getEntry(counter).setAmount(value);
+						monthlyBudget.getIncome().getEntry(counter-1).setAmount(value);
 						double newSum = monthlyBudget.getIncome().getSum() + value;
 						monthlyBudget.getIncome().setSum(newSum);
 						sumTF.setText(Double.toString(monthlyBudget.getIncome().getSum()));
 					}
 					if (type.equals("exp")) {
-						monthlyBudget.getExpense().getEntry(counter).setAmount(value);
+						monthlyBudget.getExpense().getEntry(counter-1).setAmount(value);
 						double newSum = monthlyBudget.getExpense().getSum() + value;
 						monthlyBudget.getExpense().setSum(newSum);
 						sumTF.setText(Double.toString(monthlyBudget.getExpense().getSum()));

@@ -45,20 +45,23 @@ public class EntryElements {
 				+ "]";
 	}
 
-	void addEntryToRow(GridPane grid, ArrayList<EntryElements> elemList, int counter, String input, String type, int id,
-			MonthlyBudget monthlyBudget, TextField sumTF) {
+	void addEntryToRow(GridPane grid, ArrayList<EntryElements> elemList, Counter counter, String input, String type,
+			int id, MonthlyBudget monthlyBudget, TextField sumTF, boolean loadData) {
 
 		int rowNumber = grid.getRowCount();
 		//
-		this.amountTF.getTextField()
-				.setOnAction(e -> new EventaddAmount().getHandle(e, elemList, grid, id, type, counter, monthlyBudget, sumTF));
-		this.btn.getBtn().setOnAction(e -> new EventDeleteEntry().getHandle(e, id, type, grid, elemList, monthlyBudget));
-		this.checkbox.getCheckbox().setOnAction(e -> new EventCheckbox().getHandle(e, elemList,type, monthlyBudget));
+		this.amountTF.getTextField().setOnAction(e -> new EventaddAmount().getHandle(e, elemList, grid, id, type,
+				counter.getCounter(), monthlyBudget, sumTF));
+		this.btn.getBtn().setOnAction(
+				e -> new EventDeleteEntry().getHandle(e, id, type, grid, elemList, counter, monthlyBudget));
+		this.checkbox.getCheckbox().setOnAction(e -> new EventCheckbox().getHandle(e, elemList, type, monthlyBudget));
 
-		if (type.equals("in"))
-			monthlyBudget.addIncome(counter, new Entry(input, 0, false));
-		if (type.equals("exp"))
-			monthlyBudget.addExpense(counter, new Entry(input,0,false));
+		if (!loadData) {
+			if (type.equals("in"))
+				monthlyBudget.addIncome(counter.getCounter(), new Entry(input, 0, false));
+			if (type.equals("exp"))
+				monthlyBudget.addExpense(counter.getCounter(), new Entry(input, 0, false));
+		}
 
 		int firstEmptyRow = findEmptyRow(rowNumber, grid);
 
@@ -77,7 +80,6 @@ public class EntryElements {
 		GridPane.setRowIndex(nodeLabel, row + 1);
 		GridPane.setRowIndex(nodeTF, row + 1);
 	}
-
 
 	static public int findEmptyRow(int rowNumber, GridPane grid) {
 		int firstEmptyRow = 999;

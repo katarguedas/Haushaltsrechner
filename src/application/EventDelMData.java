@@ -20,21 +20,24 @@ public class EventDelMData {
 		return this.event;
 	}
 
-	public void getHandle(EntryElemList entryElemList,int id, ArrayList<GridPane> gridList, MonthlyBudget monthlyBudget) {
-		deleteData(entryElemList,id, gridList, monthlyBudget);
+	public void getHandle(EntryElemList entryElemList, int id, ArrayList<GridPane> gridList, Counter counterIn,
+			Counter CounterExp, MonthlyBudget monthlyBudget) {
+		deleteData(entryElemList, id, gridList, counterIn, CounterExp, monthlyBudget);
 	}
 
-	public void deleteData(EntryElemList entryElemList,int id, ArrayList<GridPane> gridList,
-			MonthlyBudget monthlyBudget) {
-		
+	public void deleteData(EntryElemList entryElemList, int id, ArrayList<GridPane> gridList, Counter counterIn,
+			Counter CounterExp, MonthlyBudget monthlyBudget) {
 
 		deleteElements(gridList.get(0), entryElemList.getEntryElemList("in"));
 		deleteElements(gridList.get(1), entryElemList.getEntryElemList("exp"));
-
-		deleteEntries(gridList.get(0), entryElemList, "in", "insum"+id, monthlyBudget);
-		deleteEntries(gridList.get(1), entryElemList, "exp", "expsum"+id, monthlyBudget);
 		
-		int pos[] = Helper.getNodePosFromGridPane(gridList.get(2), "tftotal"+id);
+		deleteEntries(gridList.get(0), entryElemList, "in", "insum" + id, monthlyBudget);
+		deleteEntries(gridList.get(1), entryElemList, "exp", "expsum" + id, monthlyBudget);
+		
+		counterIn.reset();
+		CounterExp.reset();
+
+		int pos[] = Helper.getNodePosFromGridPane(gridList.get(2), "tftotal" + id);
 		TextField tf = (TextField) Helper.getNodeFromGridPane(gridList.get(2), pos[0], pos[1]);
 		tf.setText("0");
 	}
@@ -59,6 +62,7 @@ public class EventDelMData {
 
 	private void deleteEntries(GridPane grid, EntryElemList entryElemList, String type, String id,
 			MonthlyBudget monthlyBudget) {
+
 		entryElemList.getEntryElemList(type).clear();
 
 		if (type.equals("in")) {
@@ -70,7 +74,7 @@ public class EventDelMData {
 			monthlyBudget.getExpense().setSum(0);
 		}
 		monthlyBudget.calcTotal();
-		
+
 		int pos[] = Helper.getNodePosFromGridPane(grid, id);
 		TextField tf = (TextField) Helper.getNodeFromGridPane(grid, pos[0], pos[1]);
 		tf.setText("0");

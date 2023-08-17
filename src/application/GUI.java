@@ -23,7 +23,7 @@ public class GUI {
 		this.fileHandling.getBtn("delete").setOnAction(e->new EventDeleteAllData().getHandle(tablist));
 		this.fileHandling.getBtn("load").setOnAction(e->new EventLoadData().getHandle(annualBudget, tablist));
 		this.fileHandling.getBtn("save").setOnAction(e->new EventSaveAllData().getHandle(annualBudget));
-
+		
 		for (MonthOfYear month : MonthOfYear.values()) {
 			int id = month.getValue();
 			this.tablist.add(new TabElements(id, month.toString(), annualBudget.getMonthlyBudget(id)));

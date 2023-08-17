@@ -22,15 +22,15 @@ public class EventCheckbox {
 		
 		int hashcode = event.getSource().hashCode();
 		int index = Helper.findIndex(elemList, hashcode, "checkbox");
-				
+		
 		elemList.get(index).checkbox.changeState();
 		
 		if(type.equals("in")) {
-			boolean check = monthlyBudget.getIncome().getEntry(index+1).isFixed();
+			boolean check = monthlyBudget.getIncome().getEntry(index).isFixed();
 			if (check == true)
-			monthlyBudget.getIncome().getEntry(index+1).setFixed(false);
+			monthlyBudget.getIncome().getEntry(index).setFixed(false);
 			if (check == false)
-				monthlyBudget.getIncome().getEntry(index+1).setFixed(true);
+				monthlyBudget.getIncome().getEntry(index).setFixed(true);
 		}
 	}
 

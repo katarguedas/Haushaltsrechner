@@ -42,6 +42,9 @@ public class ItemTotal extends ConfigElements {
 
 		this.tf.getTextField().setAlignment(Pos.CENTER);
 	}
+	public ItemTotal getItemTotal() {
+		return this.getItemTotal();
+	}
 	
 	public void configTotal(GridPane grid, int prefHeight) {
 		grid.setStyle(getBg() + getMidGreen());

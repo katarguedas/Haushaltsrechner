@@ -15,12 +15,12 @@ public class EventaddEntryElements {
 	}
 
 	public void getHandle(EntryElemList elemList, TextField input, int id, GridPane grid, Counter counter, int maxRowNumber,
-			String type, MonthlyBudget monthlyBudget, TextField sumTF) {
-		addEntryElements(elemList, input, id, grid, counter, maxRowNumber, type, monthlyBudget, sumTF);
+			String type, MonthlyBudget monthlyBudget, TextField sumTF, boolean loadData) {
+		addEntryElements(elemList, input, id, grid, counter, maxRowNumber, type, monthlyBudget, sumTF, loadData);
 	}
 
-	public void addEntryElements(EntryElemList elemList, TextField input, int id, GridPane grid, Counter counter,
-			int maxRowNumber, String type, MonthlyBudget monthlyBudget, TextField sumTF) {
+	static public void addEntryElements(EntryElemList elemList, TextField input, int id, GridPane grid, Counter counter,
+			int maxRowNumber, String type, MonthlyBudget monthlyBudget, TextField sumTF, boolean loadData) {
 		if (input.getText().length() < 1) {
 			System.out.println("Kein Text eingegeben");
 			MyAlerts.infoAlert(2);
@@ -33,7 +33,7 @@ public class EventaddEntryElements {
 				// GUI-Elements of the new Entry
 				EntryElements entryEl = new EntryElements(counter.getCounter(), input.getText());
 				elemList.addEntryElemToList(entryEl, counter.getCounter(), input.getText(), type);
-				entryEl.addEntryToRow(grid, elemList.getEntryElemList(type), counter.getCounter(), input.getText(), type, id, monthlyBudget, sumTF );
+				entryEl.addEntryToRow(grid, elemList.getEntryElemList(type), counter, input.getText(), type, id, monthlyBudget, sumTF, loadData);
 				
 				input.clear();
 			} else {

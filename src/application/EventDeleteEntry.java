@@ -14,11 +14,11 @@ public class EventDeleteEntry {
 		return this.event;
 	}
 
-	public void getHandle(ActionEvent event,int id,String type,GridPane grid, ArrayList<EntryElements> elemList, MonthlyBudget monthlyBudget ) {
-		deleteEntry(event,id, type, grid, elemList, monthlyBudget);
-	}
+	public void getHandle(ActionEvent event,int id,String type,GridPane grid, ArrayList<EntryElements> elemList, Counter counter, MonthlyBudget monthlyBudget ) {
+		deleteEntry(event,id, type, grid, elemList, counter, monthlyBudget);
+			}
 
-	void deleteEntry(ActionEvent event, int id, String type, GridPane grid, ArrayList<EntryElements> elemList,  MonthlyBudget monthlyBudget) {
+	void deleteEntry(ActionEvent event, int id, String type, GridPane grid, ArrayList<EntryElements> elemList, Counter counter,  MonthlyBudget monthlyBudget) {
 		
 		int hashcode = event.getSource().hashCode();
 
@@ -30,6 +30,8 @@ public class EventDeleteEntry {
 		grid.getChildren().removeAll((elemList.get(index).label.getLabel()));
 		
 		elemList.remove(index);
+		
+		counter.decrement();
 		
 		if(type.equals("in"))
 			monthlyBudget.getIncome().getEntryList().remove(index);

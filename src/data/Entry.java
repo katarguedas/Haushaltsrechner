@@ -6,7 +6,7 @@ public class Entry {
 	private double amount;
 	private boolean fixed;
 
-	Entry() {
+	public Entry() {
 	}
 
 	public Entry(String name, double amount, boolean fixed) {

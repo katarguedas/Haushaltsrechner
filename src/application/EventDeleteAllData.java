@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import data.MonthOfYear;
 import javafx.event.ActionEvent;
 
-
 public class EventDeleteAllData {
 	ActionEvent event = new ActionEvent();
 
@@ -23,6 +22,7 @@ public class EventDeleteAllData {
 			int id = month.getValue();
 			EventDelMData event = new EventDelMData();
 			event.deleteData(tablist.get(id - 1).getEntryElemList(), id, tablist.get(id - 1).getGridlist(),
+					tablist.get(id - 1).getCounter("in"), tablist.get(id - 1).getCounter("exp"),
 					tablist.get(id - 1).getMonthlyBudget());
 		}
 

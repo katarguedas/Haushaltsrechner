@@ -16,8 +16,25 @@ public class AnnualBudget {
 		for (HashMap.Entry<MonthOfYear, MonthlyBudget> set : annualBudget.entrySet()) {
 
 			if (set.getKey().getValue() == id) {
-				System.out.println("gefunden" + id + ", " + set.getKey());
+//				System.out.println("gefunden" + id + ", " + set.getKey());
 				return set.getValue();
+			}
+		}
+		return null;
+	}
+	
+	public void printAnnualBudget() {
+		for (HashMap.Entry<MonthOfYear, MonthlyBudget> set : annualBudget.entrySet()) {
+
+			System.out.println(set);
+		}
+	}
+	
+	public String getMonthName(int id) {
+		for (HashMap.Entry<MonthOfYear, MonthlyBudget> set : annualBudget.entrySet()) {
+
+			if (set.getKey().getValue() == id) {
+				return  set.getKey().toString();
 			}
 		}
 		return null;
