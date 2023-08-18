@@ -59,8 +59,33 @@ public class Helper {
 			System.out.println("NIX gefunden mit " + text);
 			row=0;
 		}
-
 		return row;
+	}
+	
+	static public int findfirstEmptyRow(int rowNumber,int firstRow, GridPane grid) {
+		int emptyRow = 999;
+
+		for (int i = firstRow; i < rowNumber; i++) {
+			// finde die letzte freie Zeile von unten zählend
+			if (Helper.getNodeFromGridPane(grid, 1, i) == null) {
+				emptyRow = i;
+				break;
+			}
+		}
+		return emptyRow;
+	}
+	
+	static public int findLastEmptyRow(int rowNumber,int firstRow, GridPane grid) {
+		int emptyRow = 999;
+		
+		for (int i = rowNumber; i >firstRow; i--) {
+			// finde die erste freie Zeile von oben zählend
+			if (Helper.getNodeFromGridPane(grid, 1, i) == null) {
+				emptyRow = i;
+				break;
+			}
+		}
+		return emptyRow;
 	}
 	
 	

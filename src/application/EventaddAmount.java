@@ -6,6 +6,8 @@ import data.Entry;
 import data.MonthlyBudget;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -33,32 +35,41 @@ public class EventaddAmount {
 		if (index != 999) {
 
 			String inputText = elemList.get(index).amountTF.getTextField().getText();
+			elemList.get(index).amountTF.getTextField().setAlignment(Pos.CENTER_RIGHT);
+			int elemId=elemList.get(index).getId();
+			elemList.get(index).checkbox.getCheckbox().requestFocus();
 
 			if (!inputText.isEmpty()) {
+				
 				try {
 					double value = Double.parseDouble(inputText);
 
 					if (type.equals("in")) {
-						monthlyBudget.getIncome().getEntry(counter-1).setAmount(value);
-						double newSum = monthlyBudget.getIncome().getSum() + value;
-						monthlyBudget.getIncome().setSum(newSum);
-						sumTF.setText(Double.toString(monthlyBudget.getIncome().getSum()));
+						monthlyBudget.getIncome().getEntry(elemId).setAmount(value);
+						sumTF.setText(Double.toString(monthlyBudget.getIncome().sum()));
+						sumTF.setAlignment(Pos.CENTER_RIGHT);
+						sumTF.setEditable(false);
 					}
 					if (type.equals("exp")) {
-						monthlyBudget.getExpense().getEntry(counter-1).setAmount(value);
-						double newSum = monthlyBudget.getExpense().getSum() + value;
-						monthlyBudget.getExpense().setSum(newSum);
-						sumTF.setText(Double.toString(monthlyBudget.getExpense().getSum()));
+						monthlyBudget.getExpense().getEntry(elemId).setAmount(value);
+						sumTF.setText(Double.toString(monthlyBudget.getExpense().sum()));
+						sumTF.setAlignment(Pos.CENTER_RIGHT);
+						sumTF.setEditable(false);
 					}
 					monthlyBudget.calcTotal();
 
 				} catch (NumberFormatException e) {
-					System.out.println("Es uwrde keine Zahl eingegeben.");
+					System.out.println("Es wurde keine Zahl eingegeben.");
 					MyAlerts.errorAlert(2);
 				}
 			}
 
 		}
+	}
+	
+	private void updateTF(TextField sumTF, MonthlyBudget monthlyBudget) {
+		sumTF.setText(Double.toString(monthlyBudget.getIncome().getSum()));;
+		
 	}
 
 }

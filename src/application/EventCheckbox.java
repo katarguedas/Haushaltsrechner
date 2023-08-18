@@ -24,13 +24,14 @@ public class EventCheckbox {
 		int index = Helper.findIndex(elemList, hashcode, "checkbox");
 		
 		elemList.get(index).checkbox.changeState();
+		int elemId=elemList.get(index).getId();
 		
 		if(type.equals("in")) {
-			boolean check = monthlyBudget.getIncome().getEntry(index).isFixed();
+			boolean check = monthlyBudget.getIncome().getEntry(elemId).isFixed();
 			if (check == true)
-			monthlyBudget.getIncome().getEntry(index).setFixed(false);
+			monthlyBudget.getIncome().getEntry(elemId).setFixed(false);
 			if (check == false)
-				monthlyBudget.getIncome().getEntry(index).setFixed(true);
+				monthlyBudget.getIncome().getEntry(elemId).setFixed(true);
 		}
 	}
 

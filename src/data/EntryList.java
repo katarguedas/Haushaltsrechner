@@ -13,12 +13,12 @@ public class EntryList {
 	}
 
 	public double sum() {
-		double sum = 0.0;
+		this.sum = 0.0;
 		if (!this.entryList.isEmpty()) {
-			for(int i=0; i<this.entryList.size();i++) {
+			for (int i = 0; i < this.entryList.size(); i++) {
 //			for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
 				double value = entryList.get(i).getAmount();
-				sum += value;
+				this.sum += value;
 			}
 			return sum;
 		} else {
@@ -38,14 +38,15 @@ public class EntryList {
 		return sum;
 	}
 
-	public Entry getEntry(int index) {
-		
-//		for (HashMap.Entry<Integer, Entry> entry : entryList.entrySet()) {
-//			if (entry.getKey() == id) {
-//				return entry.getValue();
-//			}
-//		}
-		return this.entryList.get(index);
+	public Entry getEntry(int id) {
+		if (id <= this.entryList.size()) {
+			for (int i = 0; i < this.entryList.size(); i++) {
+				if (id == this.entryList.get(i).getId())
+					return this.entryList.get(i);
+			}
+		}
+		System.out.println("diese Id gibt es nicht.");
+		return null;
 	}
 
 	@Override

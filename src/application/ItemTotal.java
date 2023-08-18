@@ -11,41 +11,44 @@ import singleElements.MyLabel;
 import singleElements.MyTextField;
 
 public class ItemTotal extends ConfigElements {
-	
+
 	MyLabel label;
 	MyButton btn;
 	MyTextField tf;
 
 	int labelPrefW = 320;
 	int btnPrefW = 100;
-	int tfPrefW = 120;
-	int prefH = 30;
+	int tfPrefW = 122;
+	int prefH = 35;
 	String labelBg = getBg() + getMidGreen();
 	String labelfontStyle = getfontStyle(1);
-	int labelFontSize=  getfontSize(2);
+	int labelFontSize = getfontSize(2);
 	String btnBg = getBg() + getDarkBlue();
 	String btnfontStyle = getfontStyle(1);
-	int btnFontSize=  getfontSize(1);
-	
+	int btnFontSize = getfontSize(1);
+
 	ItemTotal() {
-		
+
 	}
-	
+
 	ItemTotal(String labelText, String btnText, String id) {
 		this.label = new MyLabel(labelText, "", labelPrefW, prefH, labelBg, labelfontStyle, labelFontSize);
 		this.btn = new MyButton(btnText, id, btnPrefW, prefH, btnBg, btnfontStyle, btnFontSize);
-		this.tf = new MyTextField("tf"+id, "", tfPrefW, prefH);
-		
+		this.tf = new MyTextField("tf" + id, "", tfPrefW, prefH);
+
 		this.label.getLabel().setAlignment(Pos.CENTER_RIGHT);
 		this.label.getLabel().setPadding(new Insets(5, 20, 5, 0));
 		this.btn.getBtn().setTextFill(Color.valueOf(getCream()));
 
 		this.tf.getTextField().setAlignment(Pos.CENTER);
+		this.tf.getTextField()
+				.setStyle(getBg() + getCream() + ";" + getBorder() + getDarkBlue() + ";" + "-fx-border-radius: 2");
 	}
+
 	public ItemTotal getItemTotal() {
 		return this.getItemTotal();
 	}
-	
+
 	public void configTotal(GridPane grid, int prefHeight) {
 		grid.setStyle(getBg() + getMidGreen());
 		grid.setPrefSize(prefHeight, 46);
@@ -55,11 +58,11 @@ public class ItemTotal extends ConfigElements {
 
 		GridPane.setMargin(this.btn.getBtn(), new Insets(3, 10, 3, 10));
 	};
-	
+
 	public void calcTotal() {
 		//
 	}
-	
+
 	public void addEvent(MonthlyBudget monthlyBudget, TextField totalTF) {
 		try {
 			this.btn.getBtn().setOnAction(e -> new EventCalcTotal().getHandle(monthlyBudget, totalTF));

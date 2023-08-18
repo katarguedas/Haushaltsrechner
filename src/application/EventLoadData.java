@@ -61,7 +61,6 @@ public class EventLoadData extends JSON_IO {
 			setGridAElements(tablist.get(id - 1).getGridlist().get(1), id, tablist.get(id - 1).getCounter("exp"), "exp",
 					tablist.get(id - 1).getEntryElemList(), annualBudget.getMonthlyBudget(id).getExpense(),
 					annualBudget.getMonthlyBudget(id));
-
 		}
 	}
 
@@ -70,9 +69,10 @@ public class EventLoadData extends JSON_IO {
 
 		int length = entryList.getEntryList().size();
 		if (length > 0) {
-			for (int i = 0; i < length; i++) {
+			for (int i = 1; i <= length; i++) {
 
 				// Text des Eintrags
+				int entryId = entryList.getEntry(i).getId();
 				String input = entryList.getEntry(i).getName();
 				Double amount = entryList.getEntry(i).getAmount();
 				boolean state = entryList.getEntry(i).isFixed();

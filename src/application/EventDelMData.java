@@ -3,6 +3,7 @@ package application;
 import java.time.Month;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import data.EntryList;
@@ -22,7 +23,10 @@ public class EventDelMData {
 
 	public void getHandle(EntryElemList entryElemList, int id, ArrayList<GridPane> gridList, Counter counterIn,
 			Counter CounterExp, MonthlyBudget monthlyBudget) {
-		deleteData(entryElemList, id, gridList, counterIn, CounterExp, monthlyBudget);
+		int input = JOptionPane.showConfirmDialog(null, "Sollen die Daten für diesen Monat gelöscht werden?");
+		// 0=yes, 1=no, 2=cancel
+		if (input == 0)
+			deleteData(entryElemList, id, gridList, counterIn, CounterExp, monthlyBudget);
 	}
 
 	public void deleteData(EntryElemList entryElemList, int id, ArrayList<GridPane> gridList, Counter counterIn,
@@ -30,10 +34,10 @@ public class EventDelMData {
 
 		deleteElements(gridList.get(0), entryElemList.getEntryElemList("in"));
 		deleteElements(gridList.get(1), entryElemList.getEntryElemList("exp"));
-		
+
 		deleteEntries(gridList.get(0), entryElemList, "in", "insum" + id, monthlyBudget);
 		deleteEntries(gridList.get(1), entryElemList, "exp", "expsum" + id, monthlyBudget);
-		
+
 		counterIn.reset();
 		CounterExp.reset();
 

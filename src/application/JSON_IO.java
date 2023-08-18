@@ -80,7 +80,7 @@ public abstract class JSON_IO {
 							for (int i = 0; i < inLength; i++) {
 								JSONObject jsonEntry = income.getJSONObject(i);
 								Entry entry = new Entry();
-								
+								entry.setId(jsonEntry.getInt("id"));
 								entry.setAmount(jsonEntry.optDouble("amount"));
 								entry.setName(jsonEntry.getString("name"));
 								entry.setFixed(jsonEntry.getBoolean("fixed"));
@@ -97,6 +97,7 @@ public abstract class JSON_IO {
 							for (int i = 0; i < expLength; i++) {
 								JSONObject jsonEntry = expense.getJSONObject(i);
 								Entry entry = new Entry();
+								entry.setId(jsonEntry.getInt("id"));
 								entry.setAmount(jsonEntry.getDouble("amount"));
 								entry.setName(jsonEntry.getString("name"));
 								entry.setFixed(jsonEntry.getBoolean("fixed"));

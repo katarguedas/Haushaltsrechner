@@ -39,8 +39,8 @@ public class TabElements extends ConfigElements {
 	private int scrollPrefWidth = 665;
 	private int scrollPrefHeight = 650;
 	private int vboxMaxHeight = 1000;
-	private int vboxMinHeight = 700;
-	private int vboxPrefWidth = 700;
+	private int vboxMinHeight = 1100;
+	private int vboxPrefWidth = 740;
 	private int delBtnLayoutX = 30;
 	private int delBtnLayoutY = 15;
 	private String[] gridLabels = { "", "Bezeichnung", "Betrag", "Fixkosten" };
@@ -55,7 +55,7 @@ public class TabElements extends ConfigElements {
 	private String[] type = { "in", "exp" };
 	private Counter counterIn = new Counter();
 	private Counter counterExp = new Counter();
-	private int maxRowNumber = 12;
+	private int maxRowNumber = 11;
 	final static int sumInitRow = 3;
 
 	TabElements(int id, String month, MonthlyBudget monthlyBudget) {
@@ -138,7 +138,7 @@ public class TabElements extends ConfigElements {
 	}
 
 	private void configGridTypeA(GridPane grid, String[] labels, String type) {
-
+grid.setVisible(true);
 		grid.setPrefWidth(660);
 
 		Image image = new Image("File:tacho.png");

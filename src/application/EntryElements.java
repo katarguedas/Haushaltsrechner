@@ -53,22 +53,22 @@ public class EntryElements {
 		this.amountTF.getTextField().setOnAction(e -> new EventaddAmount().getHandle(e, elemList, grid, id, type,
 				counter.getCounter(), monthlyBudget, sumTF));
 		this.btn.getBtn().setOnAction(
-				e -> new EventDeleteEntry().getHandle(e, id, type, grid, elemList, counter, monthlyBudget));
+				e -> new EventDeleteEntry().getHandle(e, id, type, grid, elemList, counter, sumTF, monthlyBudget));
 		this.checkbox.getCheckbox().setOnAction(e -> new EventCheckbox().getHandle(e, elemList, type, monthlyBudget));
 
 		if (!loadData) {
 			if (type.equals("in"))
-				monthlyBudget.addIncome(counter.getCounter(), new Entry(input, 0, false));
+				monthlyBudget.addIncome(counter.getCounter(), new Entry(counter.getCounter(),input, 0, false));
 			if (type.equals("exp"))
-				monthlyBudget.addExpense(counter.getCounter(), new Entry(input, 0, false));
+				monthlyBudget.addExpense(counter.getCounter(), new Entry(counter.getCounter(), input, 0, false));
 		}
 
-		int firstEmptyRow = findEmptyRow(rowNumber, grid);
+		int emptyRow = Helper.findLastEmptyRow(rowNumber-1,0, grid);
 
-		grid.add(this.btn.getBtn(), 0, firstEmptyRow);
-		grid.add(this.label.getLabel(), 1, firstEmptyRow);
-		grid.add(this.amountTF.getTextField(), 2, firstEmptyRow);
-		grid.add(this.checkbox.getCheckbox(), 3, firstEmptyRow);
+		grid.add(this.btn.getBtn(), 0, emptyRow);
+		grid.add(this.label.getLabel(), 1, emptyRow);
+		grid.add(this.amountTF.getTextField(), 2, emptyRow);
+		grid.add(this.checkbox.getCheckbox(), 3, emptyRow);
 
 		editDesign(grid);
 //
@@ -79,19 +79,6 @@ public class EntryElements {
 		Node nodeTF = Helper.getNodeFromGridPane(grid, 2, row);
 		GridPane.setRowIndex(nodeLabel, row + 1);
 		GridPane.setRowIndex(nodeTF, row + 1);
-	}
-
-	static public int findEmptyRow(int rowNumber, GridPane grid) {
-		int firstEmptyRow = 999;
-
-		for (int i = 0; i < rowNumber; i++) {
-			// finde die erste freie Zeile von oben zählend
-			if (Helper.getNodeFromGridPane(grid, 1, i) == null) {
-				firstEmptyRow = i;
-				break;
-			}
-		}
-		return firstEmptyRow;
 	}
 
 	public void editDesign(GridPane grid) {
@@ -106,5 +93,9 @@ public class EntryElements {
 		this.amountTF.getTextField().setPromptText("Betrag + Enter");
 		this.amountTF.getTextField().setAlignment(Pos.CENTER_RIGHT);
 
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 }

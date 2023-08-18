@@ -26,6 +26,7 @@ public class MyAlerts {
 					"Bitte nur Zahlen eingeben.");
 
 			alert2.showAndWait();
+			break;
 
 		default:
 		}
@@ -68,6 +69,14 @@ public class MyAlerts {
 			alert4.setContentText("Keinen Dateinamen zum Speichern gefunden.");
 
 			alert4.showAndWait();
+			break;
+		case 5:
+			Alert alert5 = new Alert(AlertType.INFORMATION);
+			alert5.setTitle("Hinweis");
+			alert5.setHeaderText("hiermit werden die Daten aller Monate gelöscht.");
+			alert5.setContentText("Keinen Dateinamen zum Speichern gefunden.");
+			
+			alert5.showAndWait();
 			break;
 
 		default:

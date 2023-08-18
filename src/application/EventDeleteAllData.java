@@ -2,6 +2,8 @@ package application;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import data.MonthOfYear;
 import javafx.event.ActionEvent;
 
@@ -13,7 +15,11 @@ public class EventDeleteAllData {
 	}
 
 	public void getHandle(ArrayList<TabElements> tablist) {
-		deleteAllData(tablist);
+		int input = JOptionPane.showConfirmDialog(null, "Sollen die Daten aller Monate gelöscht werden?");
+		// 0=yes, 1=no, 2=cancel
+		System.out.println(input);
+		if (input == 0)
+			deleteAllData(tablist);
 	}
 
 	void deleteAllData(ArrayList<TabElements> tablist) {

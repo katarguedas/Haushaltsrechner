@@ -2,6 +2,7 @@ package data;
 
 public class Entry {
 
+	private int id;
 	private String name;
 	private double amount;
 	private boolean fixed;
@@ -9,14 +10,23 @@ public class Entry {
 	public Entry() {
 	}
 
-	public Entry(String name, double amount, boolean fixed) {
+	public Entry(int id, String name, double amount, boolean fixed) {
+		this.id = id;
 		this.name = name;
 		this.amount = amount;
 		this.fixed = fixed;
 	}
 
+	public void setId(int id) {
+		 this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -24,7 +34,7 @@ public class Entry {
 	}
 
 	public double getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	public void setAmount(double amount) {
@@ -41,7 +51,7 @@ public class Entry {
 
 	@Override
 	public String toString() {
-		return "Entry [name=" + name + ", amount=" + amount + ", fixed=" + fixed + "]";
+		return "Entry [id=" + id + ", name=" + name + ", amount=" + amount + ", fixed=" + fixed + "]";
 	}
 
 }
