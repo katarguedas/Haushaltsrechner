@@ -1,15 +1,15 @@
-package application;
+package events;
 
-import java.time.Month;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 
-import data.EntryList;
+import application.Counter;
+import application.EntryElemList;
+import application.EntryElements;
+import application.Helper;
 import data.MonthlyBudget;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 

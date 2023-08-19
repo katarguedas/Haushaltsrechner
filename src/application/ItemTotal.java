@@ -1,6 +1,8 @@
 package application;
 
 import data.MonthlyBudget;
+
+import events.EventCalcTotal;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -10,6 +12,12 @@ import singleElements.MyButton;
 import singleElements.MyLabel;
 import singleElements.MyTextField;
 
+/**
+ * Contains variables and GUI elements of the third GridPane which show the sum of all entries for one month.
+ * 
+ * @author katharina
+ *
+ */
 public class ItemTotal extends ConfigElements {
 
 	MyLabel label;
@@ -27,6 +35,9 @@ public class ItemTotal extends ConfigElements {
 	String btnfontStyle = getfontStyle(1);
 	int btnFontSize = getfontSize(1);
 
+	// **
+	// Constructors
+	// **
 	ItemTotal() {
 
 	}
@@ -45,10 +56,14 @@ public class ItemTotal extends ConfigElements {
 				.setStyle(getBg() + getCream() + ";" + getBorder() + getDarkBlue() + ";" + "-fx-border-radius: 2");
 	}
 
+	// **
+	// Getter
+	// **
 	public ItemTotal getItemTotal() {
 		return this.getItemTotal();
 	}
 
+    //	
 	public void configTotal(GridPane grid, int prefHeight) {
 		grid.setStyle(getBg() + getMidGreen());
 		grid.setPrefSize(prefHeight, 46);
@@ -59,10 +74,13 @@ public class ItemTotal extends ConfigElements {
 		GridPane.setMargin(this.btn.getBtn(), new Insets(3, 10, 3, 10));
 	};
 
-	public void calcTotal() {
-		//
-	}
 
+	/**
+	 * Adds event to the button to calculate the sum of all entries
+	 * 
+	 * @param monthlyBudget  - all data for one month
+	 * @param totalTF        - TextField that shows the sum of all entries
+	 */
 	public void addEvent(MonthlyBudget monthlyBudget, TextField totalTF) {
 		try {
 			this.btn.getBtn().setOnAction(e -> new EventCalcTotal().getHandle(monthlyBudget, totalTF));

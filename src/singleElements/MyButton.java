@@ -3,10 +3,19 @@ package singleElements;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 
+/**
+ * own class for a button element. Offers some constructors to specify the element and its design.
+ * 
+ * @author katharina
+ *
+ */
 public class MyButton {
 
 	private Button btn = new Button();
 
+	// **
+	// Constructors
+	// **
 	MyButton() {
 
 	};
@@ -41,10 +50,14 @@ public class MyButton {
 		this.btn.setFont(new Font(fontStyle, fontSize));
 	}
 
+	// **
+	// Getters
+	// **
 	public Button getBtn() {
 		return this.btn;
 	};
 
+	// **
 	public void setBtnLayout(int x, int y) {
 		this.btn.setLayoutX(x);
 		this.btn.setLayoutY(y);

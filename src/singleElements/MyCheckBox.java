@@ -2,10 +2,19 @@ package singleElements;
 
 import javafx.scene.control.CheckBox;
 
+/**
+ * own class for a checkbox element. Offers some constructors to specify the element and its design.
+ * 
+ * @author katharina
+ *
+ */
 public class MyCheckBox {
 
 	private CheckBox checkbox = new CheckBox();
 	
+	// **
+	// Constructors
+	// **
 	MyCheckBox() {
 		
 	};
@@ -18,6 +27,9 @@ public class MyCheckBox {
 		this.checkbox.setSelected(false);
 	};
 	
+	// **
+	// Getters
+	// **
 	public CheckBox getCheckbox() {
 		return this.checkbox;
 	}
@@ -26,6 +38,7 @@ public class MyCheckBox {
 		return this.checkbox.isSelected();
 	}
 
+	// **
 	public void changeState() {
 		boolean state = !this.checkbox.isSelected();
 		this.checkbox.setSelected(!state);

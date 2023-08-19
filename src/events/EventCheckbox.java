@@ -1,7 +1,9 @@
-package application;
+package events;
 
 import java.util.ArrayList;
 
+import application.EntryElements;
+import application.Helper;
 import data.MonthlyBudget;
 import javafx.event.ActionEvent;
 

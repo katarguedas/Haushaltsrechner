@@ -1,14 +1,13 @@
-package application;
+package events;
 
 import java.util.ArrayList;
 
-import data.Entry;
+import application.EntryElements;
+import application.Helper;
+import application.MyAlerts;
 import data.MonthlyBudget;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -20,12 +19,12 @@ public class EventaddAmount {
 		return this.event;
 	}
 
-	public void getHandle(ActionEvent event, ArrayList<EntryElements> elemList, GridPane grid, int id, String type, int counter,
+	public void getHandle(ActionEvent event, ArrayList<EntryElements> elemList, GridPane grid, int id, String type, 
 			MonthlyBudget monthlyBudget, TextField sumTF) {
-		onEnterAddAmount(event, grid, id, type, elemList, counter, monthlyBudget, sumTF);
+		onEnterAddAmount(event, grid, id, type, elemList, monthlyBudget, sumTF);
 	}
 
-	void onEnterAddAmount(ActionEvent event, GridPane grid, int id, String type, ArrayList<EntryElements> elemList, int counter,
+	void onEnterAddAmount(ActionEvent event, GridPane grid, int id, String type, ArrayList<EntryElements> elemList,
 			MonthlyBudget monthlyBudget, TextField sumTF) {
 		//
 		int hashcode = event.getSource().hashCode();
@@ -43,7 +42,6 @@ public class EventaddAmount {
 				
 				try {
 					double value = Double.parseDouble(inputText);
-
 					if (type.equals("in")) {
 						monthlyBudget.getIncome().getEntry(elemId).setAmount(value);
 						sumTF.setText(Double.toString(monthlyBudget.getIncome().sum()));
@@ -65,11 +63,6 @@ public class EventaddAmount {
 			}
 
 		}
-	}
-	
-	private void updateTF(TextField sumTF, MonthlyBudget monthlyBudget) {
-		sumTF.setText(Double.toString(monthlyBudget.getIncome().getSum()));;
-		
 	}
 
 }

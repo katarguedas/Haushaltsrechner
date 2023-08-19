@@ -13,13 +13,17 @@ import org.json.JSONTokener;
 
 import data.AnnualBudget;
 import data.Entry;
-import data.EntryList;
 import data.MonthOfYear;
 import data.MonthlyBudget;
 import javafx.stage.FileChooser;
 
-public abstract class JSON_IO {
+public class JSON_IO {
 
+	/**
+	 * Exports all entered data into a json-file.
+	 * 
+	 * @param annualBudget - contains all entered data
+	 */
 	public static void exportJSON(AnnualBudget annualBudget) {
 
 		JSONObject data = new JSONObject();
@@ -27,9 +31,9 @@ public abstract class JSON_IO {
 			int id = month.getValue();
 
 			JSONObject tmp = new JSONObject().put("monthlyBudget",
-					new JSONObject().put("income", annualBudget.getMonthlyBudget(id).getIncome().getEntryList() )
-					.put("expense", annualBudget.getMonthlyBudget(id).getExpense().getEntryList())
-					.put("total", annualBudget.getMonthlyBudget(id).getTotal()));
+					new JSONObject().put("income", annualBudget.getMonthlyBudget(id).getIncome().getEntryList())
+							.put("expense", annualBudget.getMonthlyBudget(id).getExpense().getEntryList())
+							.put("total", annualBudget.getMonthlyBudget(id).getTotal()));
 			data.put(annualBudget.getMonthName(id), tmp);
 		}
 
@@ -48,6 +52,13 @@ public abstract class JSON_IO {
 		}
 	}
 
+	/**
+	 * Imports data from a json-file and creates all necessary GUI-Elements.
+	 * 
+	 * @param annualBudget - data of all months
+	 * 
+	 * @return: true or false
+	 */
 	public static boolean importJSON(AnnualBudget annualBudget) {
 
 		JSONObject jsonData = new JSONObject();
@@ -65,7 +76,6 @@ public abstract class JSON_IO {
 				JSONTokener tokener = new JSONTokener(reader);
 				jsonData = new JSONObject(tokener);
 
-				// importieren
 				try {
 					for (MonthOfYear month : MonthOfYear.values()) {
 						int id = month.getValue();
@@ -73,39 +83,10 @@ public abstract class JSON_IO {
 						JSONObject JSONmonthlyData = jsonData.getJSONObject(monthName);
 						JSONObject mb = JSONmonthlyData.getJSONObject("monthlyBudget");
 						double total = mb.getDouble("total");
-						JSONArray income = mb.getJSONArray("income");
-						int inLength = income.length();
-						if (inLength > 0) {
-							double inSum = 0;
-							for (int i = 0; i < inLength; i++) {
-								JSONObject jsonEntry = income.getJSONObject(i);
-								Entry entry = new Entry();
-								entry.setId(jsonEntry.getInt("id"));
-								entry.setAmount(jsonEntry.optDouble("amount"));
-								entry.setName(jsonEntry.getString("name"));
-								entry.setFixed(jsonEntry.getBoolean("fixed"));
-								annualBudget.getMonthlyBudget(id).addIncome(i, entry);
-								inSum = inSum + entry.getAmount();
-							}
-							annualBudget.getMonthlyBudget(id).getIncome().setSum(inSum);
-						}
-						
-						JSONArray expense = mb.getJSONArray("expense");
-						int expLength = expense.length();
-						if (expLength > 0) {
-							double expSum = 0;
-							for (int i = 0; i < expLength; i++) {
-								JSONObject jsonEntry = expense.getJSONObject(i);
-								Entry entry = new Entry();
-								entry.setId(jsonEntry.getInt("id"));
-								entry.setAmount(jsonEntry.getDouble("amount"));
-								entry.setName(jsonEntry.getString("name"));
-								entry.setFixed(jsonEntry.getBoolean("fixed"));
-								annualBudget.getMonthlyBudget(id).addExpense(i, entry);
-								expSum = expSum + entry.getAmount();
-							}
-							annualBudget.getMonthlyBudget(id).getExpense().setSum(expSum);
-						}				
+ 
+						readEntryList(annualBudget.getMonthlyBudget(id),mb, "in", "income");
+						readEntryList(annualBudget.getMonthlyBudget(id),mb, "exp", "expense");
+
 						annualBudget.getMonthlyBudget(id).setTotal(total);
 					}
 
@@ -124,9 +105,47 @@ public abstract class JSON_IO {
 			}
 		} else
 			return false;
-
 	}
 
+	/**
+	 * Reads Entries from the Income and Expense list. 
+	 * 
+	 * @param monthlyBudget - Object in which the data is stored.
+	 * @param mb            - JSONObject which contains data of one month.
+	 * @param type          - defines whether the data is from the income- or expense-list.
+	 * @param name          - String, which defines whether income or expense data is loaded.
+	 */
+	public static void readEntryList(MonthlyBudget monthlyBudget, JSONObject mb, String type, String name) {
+		JSONArray entryList = mb.getJSONArray(name);
+		int length = entryList.length();
+		if (length > 0) {
+			double sum = 0;
+			for (int i = 0; i < length; i++) {
+				JSONObject jsonEntry = entryList.getJSONObject(i);
+				Entry entry = new Entry();
+				entry.setId(jsonEntry.getInt("id"));
+				entry.setAmount(jsonEntry.optDouble("amount"));
+				entry.setName(jsonEntry.getString("name"));
+				entry.setFixed(jsonEntry.getBoolean("fixed"));
+				if (type.equals("in"))
+					monthlyBudget.addIncome(i, entry);
+				if (type.equals("exp"))
+					monthlyBudget.addExpense(i, entry);
+				sum = sum + entry.getAmount();
+			}
+			if (type.equals("in"))
+			monthlyBudget.getIncome().setSum(sum);
+			if (type.equals("exp"))
+			monthlyBudget.getExpense().setSum(sum);
+		}
+	}
+
+	/**
+	 * Opens a window to select/define the export/import-file
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static File chooseFile(int value) {
 		FileChooser fileChooser = new FileChooser();
 		// only allow text files to be selected using chooser

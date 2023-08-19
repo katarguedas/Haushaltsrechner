@@ -6,6 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Contains some methods which helps to find data and information
+ * 
+ * @author katharina
+ *
+ */
 public class Helper {
 
 //	https://stackoverflow.com/questions/20655024/javafx-gridpane-retrieve-specific-cell-content
@@ -28,8 +34,18 @@ public class Helper {
 		return null;
 	}
 
-	static public int[] getNodePosFromGridPane(GridPane gridPane, String id) {
-		ObservableList<Node> children = gridPane.getChildren();
+	/**
+	 * Looks for a Node with an specific id within a GridPane.
+	 * 
+	 * @param grid
+	 * @param id
+	 * 
+	 * @return int[] - Position of the Node within the GridPane.
+	 *                 pos[0] - Column
+	 *                 pos[1] - Row
+	 */
+	static public int[] getNodePosFromGridPane(GridPane grid, String id) {
+		ObservableList<Node> children = grid.getChildren();
 		int[] pos = { 0, 0 };
 		int flag = 0;
 		for (Node node : children) {
@@ -50,7 +66,14 @@ public class Helper {
 			return null;
 	}
 	
-	
+	/**
+	 * Looks for a Node with an specific id within a GridPane.
+	 * 
+	 * @param grid
+	 * @param text
+	 * 
+	 * @return int row - Number of the row which contains the searched Node.
+	 */
 	static public int getNodeRow(GridPane grid, String text) {
 		int row = 0;
 		if (getNodePosFromGridPane(grid, text) != null) {
@@ -62,6 +85,15 @@ public class Helper {
 		return row;
 	}
 	
+	/**
+	 * Go through the rows and find the first empty row from the top.
+	 * 
+	 * @param rowNumber
+	 * @param firstRow
+	 * @param grid
+	 * 
+	 * @return emptyRow - number of the searched row.
+	 */
 	static public int findfirstEmptyRow(int rowNumber,int firstRow, GridPane grid) {
 		int emptyRow = 999;
 
@@ -74,7 +106,15 @@ public class Helper {
 		}
 		return emptyRow;
 	}
-	
+	/**
+	 * Go through the rows and find the first empty row from the bottom.
+	 * 
+	 * @param rowNumber
+	 * @param firstRow
+	 * @param grid
+	 * 
+	 * @return emptyRow - number of the searched row.
+	 */
 	static public int findLastEmptyRow(int rowNumber,int firstRow, GridPane grid) {
 		int emptyRow = 999;
 		
@@ -88,7 +128,15 @@ public class Helper {
 		return emptyRow;
 	}
 	
-	
+	/**
+	 * Looks for an element with a specific hashcode.
+	 * 
+	 * @param elemList
+	 * @param hashcode
+	 * @param property
+	 * 
+	 * @return index - Index of the searched element within the given ArrayList.
+	 */
 	static public int findIndex(ArrayList<EntryElements> elemList, int hashcode, String property) {
 
 		int index = 999;

@@ -4,6 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Application HAUSHALTSRECHNER
+ * 
+ * @author katharina
+ *
+ */
 public class Haushaltsrechner extends Application {
 	
 	public static void main(String[] args) {

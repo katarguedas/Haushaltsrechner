@@ -3,10 +3,19 @@ package singleElements;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
+/**
+ * own class for a Label element. Offers some constructors to specify the element and its design.
+ * 
+ * @author katharina
+ *
+ */
 public class MyLabel {
 
 	private Label label = new Label();
 
+	// **
+	// Constructors
+	// **
 	MyLabel() {
 
 	}
@@ -41,10 +50,14 @@ public class MyLabel {
 		this.label.setFont(new Font(fontStyle, fontSize));
 	}
 
+	// **
+	// Getters
+	// **
 	public Label getLabel() {
 		return this.label;
 	}
 
+	// **
 	public void setLayout( int x, int y) {
 		this.label.setLayoutX(x);
 		this.label.setLayoutY(y);

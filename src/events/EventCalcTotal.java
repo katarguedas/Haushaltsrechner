@@ -1,10 +1,9 @@
-package application;
+package events;
 
 import data.MonthlyBudget;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow;
 
 public class EventCalcTotal {
 

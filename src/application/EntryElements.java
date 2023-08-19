@@ -3,7 +3,11 @@ package application;
 import java.util.ArrayList;
 
 import data.Entry;
+import application.EntryElements;
 import data.MonthlyBudget;
+import events.EventCheckbox;
+import events.EventDeleteEntry;
+import events.EventaddAmount;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,28 +19,43 @@ import singleElements.MyCheckBox;
 import singleElements.MyLabel;
 import singleElements.MyTextField;
 
+/**
+ * Contains GUI elements of an Entry.
+ * 
+ * @author katharina
+ *
+ */
 public class EntryElements {
 
 	int id;
-	MyButton btn;
-	MyLabel label;
-	MyTextField amountTF;
-	MyCheckBox checkbox;
+	public MyButton btn;
+	public MyLabel label;
+	public MyTextField amountTF;
+	public MyCheckBox checkbox;
 
+	// **
+	// Constructors
+	// **
 	EntryElements() {
 
 	}
 
-	EntryElements(int counter, String input) {
+	public EntryElements(int counter, String input) {
 		this.id = counter;
 		this.btn = new MyButton("X", "btn" + counter);
 		this.amountTF = new MyTextField("amount" + counter);
 		this.label = new MyLabel(input, "label" + counter, 350, 30, "-fx-background-color: #D9EEF0", "System", 15);
 		this.checkbox = new MyCheckBox("isFix", "isFix" + counter);
-
 		this.btn.getBtn().setAlignment(Pos.CENTER);
-
 	}
+	
+	// **
+	// Getter
+	// **
+	public int getId() {
+		return this.id;
+	}
+	
 
 	@Override
 	public String toString() {
@@ -45,17 +64,31 @@ public class EntryElements {
 				+ "]";
 	}
 
-	void addEntryToRow(GridPane grid, ArrayList<EntryElements> elemList, Counter counter, String input, String type,
+	/**
+	 * This Method adds a new Row to the GridPane with data of a new Entry.
+	 * 
+	 * @param grid           - GridPane
+	 * @param elemList
+	 * @param counter        - entry counter
+	 * @param input
+	 * @param type           - specifies whether it is the revenue or expense part. 
+	 * @param id             - Represents the xth month.
+	 * @param monthlyBudget  - Contains data ióf one months. 
+	 * @param sumTF          - TextField which shows the sum of all incomes or expenses
+	 * @param loadData       - specifies if the method is called from JSONimport or not
+	 */
+	public void addEntryToRow(GridPane grid, ArrayList<EntryElements> elemList, Counter counter, String input, String type,
 			int id, MonthlyBudget monthlyBudget, TextField sumTF, boolean loadData) {
 
 		int rowNumber = grid.getRowCount();
-		//
+		// adds events to the elements
 		this.amountTF.getTextField().setOnAction(e -> new EventaddAmount().getHandle(e, elemList, grid, id, type,
-				counter.getCounter(), monthlyBudget, sumTF));
+				 monthlyBudget, sumTF));
 		this.btn.getBtn().setOnAction(
 				e -> new EventDeleteEntry().getHandle(e, id, type, grid, elemList, counter, sumTF, monthlyBudget));
 		this.checkbox.getCheckbox().setOnAction(e -> new EventCheckbox().getHandle(e, elemList, type, monthlyBudget));
 
+		// if the entry comes from the user (and not from the json import): saves the data of the new entry
 		if (!loadData) {
 			if (type.equals("in"))
 				monthlyBudget.addIncome(counter.getCounter(), new Entry(counter.getCounter(),input, 0, false));
@@ -63,17 +96,18 @@ public class EntryElements {
 				monthlyBudget.addExpense(counter.getCounter(), new Entry(counter.getCounter(), input, 0, false));
 		}
 
+		// finds out an empty row to add there the elements
 		int emptyRow = Helper.findLastEmptyRow(rowNumber-1,0, grid);
 
+		// adds the elements to the GridPane
 		grid.add(this.btn.getBtn(), 0, emptyRow);
 		grid.add(this.label.getLabel(), 1, emptyRow);
 		grid.add(this.amountTF.getTextField(), 2, emptyRow);
 		grid.add(this.checkbox.getCheckbox(), 3, emptyRow);
 
 		editDesign(grid);
-//
-//		// Zeile mit Summe eine Zeile nach unten verschieben
 
+//		// Moves the row with the sum one row down
 		int row = Helper.getNodeRow(grid, type + "sum" + id);
 		Node nodeLabel = Helper.getNodeFromGridPane(grid, 1, row);
 		Node nodeTF = Helper.getNodeFromGridPane(grid, 2, row);
@@ -88,14 +122,8 @@ public class EntryElements {
 		this.label.getLabel().setPadding(new Insets(5, 15, 5, 15));
 		this.label.getLabel().setFont(new Font(15));
 		this.btn.getBtn().setFont(new Font(9));
-//		btn.setStyle("-fx-font-weight: bold; -fx-text-fill: red");
 		this.btn.getBtn().setStyle("-fx-text-fill: red");
 		this.amountTF.getTextField().setPromptText("Betrag + Enter");
 		this.amountTF.getTextField().setAlignment(Pos.CENTER_RIGHT);
-
-	}
-	
-	public int getId() {
-		return this.id;
 	}
 }

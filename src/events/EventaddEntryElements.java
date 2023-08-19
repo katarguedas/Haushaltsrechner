@@ -1,6 +1,9 @@
-package application;
+package events;
 
-import data.Entry;
+import application.Counter;
+import application.EntryElemList;
+import application.EntryElements;
+import application.MyAlerts;
 import data.MonthlyBudget;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;

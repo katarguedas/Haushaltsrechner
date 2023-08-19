@@ -1,10 +1,12 @@
-package application;
+package events;
 
 import java.util.ArrayList;
 
+import application.Counter;
+import application.EntryElements;
+import application.Helper;
 import data.MonthlyBudget;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -34,7 +36,7 @@ public class EventDeleteEntry {
 		grid.getChildren().removeAll((elemList.get(index).label.getLabel()));
 
 		elemList.remove(index);
-		counter.decrement();
+//		counter.decrement();
 		
 		if (type.equals("in")) {
 			monthlyBudget.getIncome().getEntryList().remove(index);

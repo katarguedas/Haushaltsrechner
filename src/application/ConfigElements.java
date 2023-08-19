@@ -9,6 +9,12 @@ import javafx.scene.text.Font;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 
+/**
+ * This abstract class contains some variables and methods to design the GUI Elements.
+ * 
+ * @author Katharina
+ *
+ */
 public abstract class ConfigElements {
 
 	private String midGreen = "#92B9B5";
@@ -20,6 +26,9 @@ public abstract class ConfigElements {
 	private String fontStyle[] = { "System", "System bold" };
 	private int fontSize[] = { 14, 15, 16, 18, 20 };
 
+	// **
+	// Getters
+	// **
 	String getBg() {
 		return bg;
 	}
@@ -52,42 +61,10 @@ public abstract class ConfigElements {
 		return fontSize[i];
 	}
 
-	public void setText(Label label, String text) {
-		label.setText(text);
-	}
 
-	public void setDimensions(Button btn, Object wmin, Object hmin, Object wpref, Object hpref, Object wmax,
-			Object hmax) {
-		if (wmin != null)
-			btn.setMinWidth((int) wmin);
-		if (hmin != null)
-			btn.setMinHeight((int) hmin);
-		if (wpref != null)
-			btn.setPrefWidth((int) wpref);
-		if (hpref != null)
-			btn.setPrefHeight((int) hpref);
-		if (wmax != null)
-			btn.setMaxWidth((int) wmax);
-		if (hmax != null)
-			btn.setMaxHeight((int) hmax);
-	}
-
-	public void setDimensions(Label label, Object wmin, Object hmin, Object wpref, Object hpref, Object wmax,
-			Object hmax) {
-		if (wmin != null)
-			label.setMinWidth((int) wmin);
-		if (hmin != null)
-			label.setMinHeight((int) hmin);
-		if (wpref != null)
-			label.setPrefWidth((int) wpref);
-		if (hpref != null)
-			label.setPrefHeight((int) hpref);
-		if (wmax != null)
-			label.setMaxWidth((int) wmax);
-		if (hmax != null)
-			label.setMaxHeight((int) hmax);
-	}
-
+	// **
+	// Methods
+	// **
 	public void setDimensions(ScrollPane scroll, Object wmin, Object hmin, Object wpref, Object hpref, Object wmax,
 			Object hmax) {
 		if (wmin != null)
@@ -154,16 +131,6 @@ public abstract class ConfigElements {
 			cons.setMaxHeight((int) hmax);
 	}
 
-	public void setLayout(Button btn, int x, int y) {
-		btn.setLayoutX(x);
-		btn.setLayoutY(y);
-	}
-
-	public void setLayout(Label label, int x, int y) {
-		label.setLayoutX(x);
-		label.setLayoutY(y);
-	}
-
 	public void setLayout(VBox box, int x, int y) {
 		box.setLayoutX(x);
 		box.setLayoutY(y);
@@ -173,14 +140,4 @@ public abstract class ConfigElements {
 		scroll.setLayoutX(x);
 		scroll.setLayoutY(y);
 	}
-
-	public void setFont(Button btn, String style, int size) {
-		btn.setFont(new Font(style, size));
-	}
-
-	public void setStyle(Button btn, String bgColor, String color) {
-		String text = "";
-		btn.setStyle("");
-	}
-
 }

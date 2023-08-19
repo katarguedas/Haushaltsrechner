@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 
 import data.MonthlyBudget;
+import events.EventDelMData;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -17,6 +18,12 @@ import javafx.scene.paint.Color;
 import singleElements.MyButton;
 import singleElements.MyLabel;
 
+/**
+ * Contains variables and GUI Elements of one Tab which represents one month.
+ * 
+ * @author katharina
+ *
+ */
 public class TabElements extends ConfigElements {
 
 	int id;
@@ -24,14 +31,18 @@ public class TabElements extends ConfigElements {
 	private AnchorPane anchor = new AnchorPane();
 	private ScrollPane scroll = new ScrollPane();
 	private VBox gridVbox = new VBox();
-	private String[] gridName = { "income", "expense", "total" };
-	private String[] mainLabels = { "EINNAHMEN", "AUSGABEN", "GESAMT" };
 	private ArrayList<MyLabel> labelList = new ArrayList<MyLabel>();
 	private ArrayList<GridPane> gridList = new ArrayList<GridPane>();
 	private MyButton delBtn = new MyButton("alle Daten für diesem Monat löschen", "delMData");
-	private String bg = "-fx-background-color: ";
 	private EntryElemList entryElemList = new EntryElemList();
 	private MonthlyBudget monthlyBudget;
+	private Counter counterIn = new Counter();
+	private Counter counterExp = new Counter();
+	private String[] gridName = { "income", "expense", "total" };
+	private String[] mainLabels = { "EINNAHMEN", "AUSGABEN", "GESAMT" };
+	private String[] type = { "in", "exp" };
+	private String bg = "-fx-background-color: ";
+	private String[] gridLabels = { "", "Bezeichnung", "Betrag", "Fixkosten" };
 	private int scrollLayoutX = 20;
 	private int scrollLayoutY = 50;
 	private int vboxLayoutX = 25;
@@ -43,7 +54,6 @@ public class TabElements extends ConfigElements {
 	private int vboxPrefWidth = 740;
 	private int delBtnLayoutX = 30;
 	private int delBtnLayoutY = 15;
-	private String[] gridLabels = { "", "Bezeichnung", "Betrag", "Fixkosten" };
 	private int labelMaxW[] = { 280, 480, 160, 200 };
 	private int labelMinW[] = { 40, 300, 80, 60 };
 	private int labelPrefW[] = { 50, 390, 120, 90 };
@@ -52,12 +62,12 @@ public class TabElements extends ConfigElements {
 	private int totalMaxW[] = { 280, 280, 150, 200 };
 	private int totalMinW[] = { 120, 120, 120, 20 };
 	private int totalPrefW[] = { 220, 200, 180, 90 };
-	private String[] type = { "in", "exp" };
-	private Counter counterIn = new Counter();
-	private Counter counterExp = new Counter();
 	private int maxRowNumber = 11;
 	final static int sumInitRow = 3;
 
+	// **
+	// Constructor
+	// **
 	TabElements(int id, String month, MonthlyBudget monthlyBudget) {
 		this.id = id;
 		this.tab.setText(month);
@@ -75,7 +85,6 @@ public class TabElements extends ConfigElements {
 			this.gridVbox.getChildren().add(labelList.get(i).getLabel());
 			this.gridVbox.getChildren().add(gridList.get(i));
 		}
-
 		this.monthlyBudget = monthlyBudget;
 
 		configScroll();
@@ -85,9 +94,11 @@ public class TabElements extends ConfigElements {
 		configGridTypeA(gridList.get(0), mainLabels, type[0]);
 		configGridTypeA(gridList.get(1), mainLabels, type[1]);
 		configGridTypeB(gridList.get(2));
-
 	}
 
+	// **
+	// Getters
+	// **
 	public Tab getTab() {
 		return this.tab;
 	}
@@ -108,6 +119,19 @@ public class TabElements extends ConfigElements {
 		return this.monthlyBudget;
 	}
 
+	public Counter getCounter(String type) {
+
+		if (type.equals("in"))
+			return this.counterIn;
+		else if (type.equals("exp"))
+			return this.counterExp;
+		else
+			return null;
+	}
+
+	// **
+	// Methods to configure the elements
+	// **
 	private void configScroll() {
 		setLayout(this.scroll, scrollLayoutX, scrollLayoutY);
 		setDimensions(this.scroll, null, null, scrollPrefWidth, scrollPrefHeight, null, null);
@@ -137,8 +161,15 @@ public class TabElements extends ConfigElements {
 		}
 	}
 
+	/**
+	 * Creates the first and second GridPane for incomes and expenses.
+	 * 
+	 * @param grid
+	 * @param labels
+	 * @param type
+	 */
 	private void configGridTypeA(GridPane grid, String[] labels, String type) {
-grid.setVisible(true);
+		grid.setVisible(true);
 		grid.setPrefWidth(660);
 
 		Image image = new Image("File:tacho.png");
@@ -150,6 +181,7 @@ grid.setVisible(true);
 		imgDelView.setFitWidth(20);
 		grid.add(imgDelView, 0, 0);
 
+		// Defines the labels of the columns
 		for (int i = 0; i < gridLabels.length; i++) {
 			MyLabel label = new MyLabel(gridLabels[i], "", labelPrefW[i], labelPrefH[i], bg + getMidGreen(),
 					getfontStyle(1), getfontSize(2));
@@ -157,6 +189,7 @@ grid.setVisible(true);
 			label.getLabel().setMinSize(labelMinW[i], labelPrefH[i]);
 			label.getLabel().setMaxSize(labelMaxW[i], labelMaxH[i]);
 
+			// adds the labels to the GridPane
 			grid.add(label.getLabel(), i, 0);
 
 			ColumnConstraints colConstraints = new ColumnConstraints();
@@ -184,6 +217,11 @@ grid.setVisible(true);
 		}
 	}
 
+	/**
+	 * Create in the third GridPane ItemTotal, which allows the user to calculate and see the sum of all entries.
+	 * 
+	 * @param grid
+	 */
 	private void configGridTypeB(GridPane grid) {
 
 		for (int i = 0; i < totalPrefW.length; i++) {
@@ -193,16 +231,6 @@ grid.setVisible(true);
 		ItemTotal itemTotal = new ItemTotal("Gesamt: ", "berechne", "total" + id);
 		itemTotal.configTotal(grid, scrollPrefHeight);
 		itemTotal.addEvent(monthlyBudget, itemTotal.tf.getTextField());
-	}
-
-	public Counter getCounter(String type) {
-
-		if (type.equals("in"))
-			return this.counterIn;
-		else if (type.equals("exp"))
-			return this.counterExp;
-		else
-			return null;
 	}
 
 }
